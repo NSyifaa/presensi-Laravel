@@ -6,6 +6,12 @@
             'routeName' => '/',
             'icon' => 'fas fa-tachometer-alt'
         ],
+        [
+            'name' => 'Periode Akademik',
+            'route' => '/periode',
+            'routeName' => 'periode',
+            'icon' => 'fas fa-calendar-alt'
+        ],
        
     ];
 @endphp
