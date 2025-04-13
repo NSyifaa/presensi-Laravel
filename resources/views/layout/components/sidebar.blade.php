@@ -12,6 +12,42 @@
             'routeName' => 'periode',
             'icon' => 'fas fa-calendar-alt'
         ],
+        [
+            'name' => 'Jurusan',
+            'route' => '/jurusan',
+            'routeName' => 'jurusan',
+            'icon' => 'fas fa-university'
+        ],
+        [
+            'name' => 'Data Mahasiswa',
+            'route' => 'mahasiswa',
+            'routeName' => 'mahasiswa',
+            'icon' => 'fas fa-users'
+        ],
+        [
+            'name' => 'Data Dosen',
+            'route' => '#',
+            'routeName' => '',
+            'icon' => 'fas fa-user'
+        ],
+        [
+            'name' => 'Mata Kuliah',
+            'route' => '#',
+            'routeName' => '',
+            'icon' => 'fas fa-book-open'
+        ],
+        [
+            'name' => 'Kelas Mata Kuliah',
+            'route' => '#',
+            'routeName' => '',
+            'icon' => 'fas fa-chalkboard-teacher'
+        ],
+        [
+            'name' => 'Presensi',
+            'route' => '#',
+            'routeName' => '',
+            'icon' => 'fas fa-clipboard-check'
+        ],
        
     ];
 @endphp
