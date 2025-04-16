@@ -25,8 +25,8 @@
                         <td>{{ $item->nama_jurusan }}</td>
                         <td>
                           <center>
-                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-edit">
-                                <i class="nav-icon fas fa-check"></i> Edit
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" data-id="{{ $item->id }}" data-nama="{{ $item->nama_jurusan }}">
+                                <i class="nav-icon fas fa-edit"></i> Edit
                             </button>
                             <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->id }}" id="btn-hapus">
                                 <i class="nav-icon fas fa-trash"></i> Hapus
@@ -44,7 +44,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg-primary">
-            <h4 class="modal-title" >Tambah Jurusan</h4>
+            <h4 class="modal-title" id="title" >Tambah Jurusan</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -54,7 +54,7 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="jurusan">Nama Jurusan</label>
-                <input type="number" class="form-control" name="jurusan" id="jurusan" placeholder="Masukan Jurusan">
+                <input type="text" class="form-control" name="jurusan" id="jurusan" placeholder="Masukan Jurusan">
                 <div class="invalid-feedback" id="error-jurusan"></div>
               </div>
             </div>
@@ -70,40 +70,48 @@
       <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    <div class="modal fade" id="modal-aktif">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-primary">
-            <h4 class="modal-title" id="modal-title">Periode Aktif</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form id="form-aktif" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-body">
-              <input type="hidden" class="form-control" name="id_periode" id="id_periode" >
-              <h5>Apakah anda ingin mengaktifkan periode yang dipilih? </h5>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-              <button type="submit" class="btn btn-primary" id="aktifkan">Ya, Aktifkan</button>
-            </div>
-          </form>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 
-    {{-- <script>
+    <script>
       $(document).ready(function() {
+        
+        $('#modal-default').on('show.bs.modal', function (event) {
+          $(this).removeAttr('aria-hidden');
+            
+            var edit = false;
+            var button = $(event.relatedTarget); 
+            var id_jurusan = button.data('id'); 
+            var nama = button.data('nama');
+            
+            console.log(id_jurusan);
+            console.log(nama);
+            
+
+            if (id_jurusan) {
+                $('#title').text('Edit Jurusan');
+                $('#jurusan').val(nama);
+                $('#form-tambah-data').data('edit', true);
+                $('#form-tambah-data').data('id', id_jurusan);
+            } else {
+                $('#title').text('Tambah Jurusan');
+                $('#jurusan').val('');
+
+                $('#form-tambah-data').data('edit', false);
+                $('#form-tambah-data').data('id', null);
+            }
+        });
+
         $('#form-tambah-data').on('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            const url = "{{ route('a.periode.add') }}";
-            const method = 'POST'; 
+
+            const formData  = new FormData(this);
+            const isEdit    = $(this).data('edit');
+            const idJurusan = $(this).data('id');
+
+            const url = isEdit
+              ? '/jurusan/edit/' + idJurusan
+              : "{{ route('a.jurusan.add') }}";
+
+            const method    = 'POST'; 
             
             // Clear previous error messages
             $('.invalid-feedback').text('').hide();
@@ -172,91 +180,12 @@
             });
 
         });
-        $('#form-aktif').on('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const url = "{{ route('a.periode.aktif') }}";
-            const method = 'POST'; 
-            
-            $.ajax({
-                type: method,
-                url: url,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: formData,
-                processData: false,
-                contentType: false,
-                beforeSend: function() {
-                    $('#aktifkan').attr('disabled', 'disabled');
-                    $('#aktifkan').html(
-                        '<i class="fa fa-spinner fa-spin mr-1"></i> Mengaktifkan');
-                },
-                complete: function() {
-                    $('#aktifkan').removeAttr('disabled');
-                    $('#aktifkan').html('Ya, Aktifkan');
-                },
-                success: function(response) {
-                  if (response.status === 'warning') {
-                        Toast.fire({
-                            icon: 'warning',
-                            title: response.message
-                        });
-                    } else {
-                        $('#modal-aktif').modal('hide');
-                        Toast.fire({
-                            icon: 'success',
-                            title: response.message
-                        });
-                        $('#form-tambah-data')[0].reset();
-                        setTimeout(function() {
-                            location.reload();
-                        }, 2500);
-                    }
-                },
-                error: function(xhr) {
-                      if (xhr.responseJSON && xhr.responseJSON.errors) {
-                          const errors = xhr.responseJSON.errors;
-
-                          $.each(errors, function(key, value) {
-                              let inputField = $('#' + key);
-                              let errorFeedback = $('#error-' + key);
-
-                              inputField.addClass('is-invalid'); // Tambahkan class is-invalid
-                              errorFeedback.text(value[0]).show(); // Tampilkan pesan error
-                          });
-
-                      } else if (xhr.responseJSON && xhr.responseJSON.error) {
-                          Swal.fire({
-                              icon: 'error',
-                              title: 'Gagal!',
-                              text: xhr.responseJSON.error
-                          });
-                      } else {
-                          Swal.fire({
-                              icon: 'error',
-                              title: 'Gagal!',
-                              text: 'Kesalahan tidak terduga. Silakan coba lagi.'
-                          });
-                      }
-                  }
-            });
-
-        });
-
-        $('#modal-aktif').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) 
-            var id_periode = button.data('id') 
-            var modal = $(this)
-
-            modal.find('.modal-body input[name="id_periode"]').val(id_periode)
-        });
 
         $('.btn-hapus').on('click', function (e) {
 
             var button = $(this); 
-            var id_periode = button.data('id') 
-            var url = "{{ route('a.periode.delete', ':id') }}".replace(':id', id_periode);
+            var id_jurusan = button.data('id') 
+            var url = "{{ route('a.jurusan.delete', ':id') }}".replace(':id', id_jurusan);
             var method = 'DELETE';
 
             Swal.fire({
@@ -277,7 +206,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data: {
-                            id_periode: id_periode
+                            id_periode: id_jurusan
                         },
                         
                         processData: false,
@@ -326,10 +255,8 @@
             });
 
         })
-            
-
       });
     
-    </script> --}}
+    </script>
     
 @endsection

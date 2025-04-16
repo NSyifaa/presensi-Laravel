@@ -11,6 +11,6 @@ class JurusanModel extends Model
 
     protected $table = 'jurusan';
     protected $fillable = [
-        "nama",
+        "nama_jurusan",
     ];
 }

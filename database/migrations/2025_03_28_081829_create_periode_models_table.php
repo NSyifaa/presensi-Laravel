@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('periode', function (Blueprint $table) {
             $table->id();
-            $table->integer('tahun');
+            $table->string('tahun');
             $table->integer('semester');
             $table->enum('status', ['A', 'T'])->default('T');
             $table->timestamps();

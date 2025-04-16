@@ -14,22 +14,19 @@ class JurusanSeeder extends Seeder
     public function run(): void
     {
         JurusanModel::create([
-            'nama_jurusan' => 'Teknik Informatika',
+            'nama_jurusan' => 'Teknik Kendaraan Motor Ringan',
         ]);
         JurusanModel::create([
-            'nama_jurusan' => 'Sistem Informasi',
+            'nama_jurusan' => 'Teknik dan Bisnis Sepeda Motor',
         ]);
         JurusanModel::create([
-            'nama_jurusan' => 'Teknik Komputer',
+            'nama_jurusan' => 'Multimedia',
         ]);
         JurusanModel::create([
-            'nama_jurusan' => 'Teknik Jaringan',
+            'nama_jurusan' => 'Bisnis Daring dan Pemasaran',
         ]);
         JurusanModel::create([
-            'nama_jurusan' => 'Teknik Multimedia',
-        ]);
-        JurusanModel::create([
-            'nama_jurusan' => 'Teknik Elektronika',
+            'nama_jurusan' => 'Akuntansi dan Keuangan Lembaga',
         ]);
     }
 }

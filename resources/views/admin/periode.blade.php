@@ -70,7 +70,7 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="tahun">Tahun Akademik</label>
-                <input type="number" class="form-control" name="tahun" id="tahun" placeholder="Tahun Semester">
+                <input type="text" class="form-control" name="tahun" id="tahun" placeholder="Tahun Semester">
                 <div class="invalid-feedback" id="error-tahun"></div>
               </div>
               <div class="form-group">

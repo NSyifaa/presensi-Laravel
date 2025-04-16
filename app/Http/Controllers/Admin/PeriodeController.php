@@ -23,7 +23,7 @@ class PeriodeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tahun' => 'required|integer',
+            'tahun' => 'required|string',
             'semester' => 'required|in:1,2',
         ]);
         

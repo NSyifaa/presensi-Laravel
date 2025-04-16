@@ -15,4 +15,8 @@ Route::post('/periode/aktifkan', [PeriodeController::class, 'aktifkan'])->name('
 Route::delete('/periode/delete/{id}', [PeriodeController::class, 'destroy'])->name('a.periode.delete');
 
 Route::get('/jurusan', [JurusanController::class, 'index'])->name('a.jurusan');
+Route::post('/jurusan/add', [JurusanController::class, 'store'])->name('a.jurusan.add');
+Route::post('/jurusan/edit/{id}', [JurusanController::class, 'update'])->name('a.jurusan.edit');
+Route::delete('/jurusan/delete/{id}', [JurusanController::class, 'destroy'])->name('a.jurusan.delete');
+
 Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('a.mahasiswa');
