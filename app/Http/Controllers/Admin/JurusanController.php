@@ -24,10 +24,12 @@ class JurusanController extends Controller
     {
         $request->validate([
             'jurusan' => 'required|string|max:255',
+            'kode_jurusan' => 'required|string|max:10',
         ]);
         
         // Check if the period already exists
         $existingPeriod = JurusanModel::where('nama_jurusan', $request->jurusan)
+            ->orWhere('kode_jurusan', $request->kode_jurusan) 
             ->first();
         
         if ($existingPeriod) {
@@ -38,6 +40,7 @@ class JurusanController extends Controller
         }
         
         JurusanModel::create([
+            'kode_jurusan' => $request->kode_jurusan,
             'nama_jurusan' => $request->jurusan,
         ]);
     
@@ -68,7 +71,7 @@ class JurusanController extends Controller
             ]); // HTTP 409: Conflict
         }
 
-        JurusanModel::where('id', $id)->update([
+        JurusanModel::where('kode_jurusan', $id)->update([
             'nama_jurusan' => $request->jurusan,
         ]);
 
@@ -83,7 +86,7 @@ class JurusanController extends Controller
      */
     public function destroy(string $id)
     {
-        $jurusan = JurusanModel::find($id);
+        $jurusan = JurusanModel::where('kode_jurusan', $id);
         if ($jurusan) {
             $jurusan->delete();
             return response()->json([

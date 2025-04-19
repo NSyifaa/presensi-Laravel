@@ -25,10 +25,10 @@
                         <td>{{ $item->nama_jurusan }}</td>
                         <td>
                           <center>
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" data-id="{{ $item->id }}" data-nama="{{ $item->nama_jurusan }}">
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" data-id="{{ $item->kode_jurusan }}" data-nama="{{ $item->nama_jurusan }}">
                                 <i class="nav-icon fas fa-edit"></i> Edit
                             </button>
-                            <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->id }}" id="btn-hapus">
+                            <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->kode_jurusan }}" id="btn-hapus">
                                 <i class="nav-icon fas fa-trash"></i> Hapus
                             </button>                              
                           </center>
@@ -52,6 +52,11 @@
           <form id="form-tambah-data" enctype="multipart/form-data">
             @csrf
             <div class="modal-body">
+              <div class="form-group">
+                <label for="kode_jurusan">Kode Jurusan</label>
+                <input type="text" class="form-control" name="kode_jurusan" id="kode_jurusan" placeholder="Kode Jurusan">
+                <div class="invalid-feedback" id="error-kode_jurusan"></div>
+              </div>
               <div class="form-group">
                 <label for="jurusan">Nama Jurusan</label>
                 <input type="text" class="form-control" name="jurusan" id="jurusan" placeholder="Masukan Jurusan">
@@ -81,20 +86,19 @@
             var button = $(event.relatedTarget); 
             var id_jurusan = button.data('id'); 
             var nama = button.data('nama');
-            
-            console.log(id_jurusan);
-            console.log(nama);
-            
 
             if (id_jurusan) {
                 $('#title').text('Edit Jurusan');
                 $('#jurusan').val(nama);
+                $('#kode_jurusan').val(id_jurusan);
+                $('#kode_jurusan').attr('readonly', true);
                 $('#form-tambah-data').data('edit', true);
                 $('#form-tambah-data').data('id', id_jurusan);
             } else {
                 $('#title').text('Tambah Jurusan');
+                $('#kode_jurusan').val('');
                 $('#jurusan').val('');
-
+                $('#kode_jurusan').attr('readonly', false);
                 $('#form-tambah-data').data('edit', false);
                 $('#form-tambah-data').data('id', null);
             }

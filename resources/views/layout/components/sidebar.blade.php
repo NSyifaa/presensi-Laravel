@@ -19,25 +19,25 @@
             'icon' => 'fas fa-university'
         ],
         [
-            'name' => 'Data Mahasiswa',
-            'route' => 'mahasiswa',
-            'routeName' => 'mahasiswa',
+            'name' => 'Data Siswa',
+            'route' => 'siswa',
+            'routeName' => 'siswa',
             'icon' => 'fas fa-users'
         ],
         [
-            'name' => 'Data Dosen',
+            'name' => 'Data Guru',
             'route' => '#',
             'routeName' => '',
             'icon' => 'fas fa-user'
         ],
         [
-            'name' => 'Mata Kuliah',
+            'name' => 'Mata Pelajaran',
             'route' => '#',
             'routeName' => '',
             'icon' => 'fas fa-book-open'
         ],
         [
-            'name' => 'Kelas Mata Kuliah',
+            'name' => 'Kelas Mapel',
             'route' => '#',
             'routeName' => '',
             'icon' => 'fas fa-chalkboard-teacher'
