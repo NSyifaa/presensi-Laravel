@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="nav-icon fas fa-users"></i> Data Mahasiswa</h3>
+                <h3 class="card-title"><i class="nav-icon fas fa-users"></i> Data Siswa</h3>
             </div>
             <div class="card-body">
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default">
