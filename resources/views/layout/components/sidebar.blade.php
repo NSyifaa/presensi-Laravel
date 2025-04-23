@@ -32,8 +32,8 @@
         ],
         [
             'name' => 'Mata Pelajaran',
-            'route' => '#',
-            'routeName' => '',
+            'route' => '/mapel',
+            'routeName' => 'mapel',
             'icon' => 'fas fa-book-open'
         ],
         [
