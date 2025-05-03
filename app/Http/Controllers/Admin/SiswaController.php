@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\SiswaModel;
 use Illuminate\Http\Request;
 
 class SiswaController extends Controller
@@ -12,7 +13,8 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        return view('admin.siswa');
+        $siswa = SiswaModel::with('jurusan')->get();  
+        return view('admin.siswa', compact('siswa'));
     }
 
     /**

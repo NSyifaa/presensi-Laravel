@@ -18,8 +18,7 @@ class SiswaSeeder extends Seeder
             'nama_siswa' => 'Matien',
             'jenis_kelamin' => 'L',
             'no_telp' => '081234567890',
-            'stat' => 'A',
-            'foto' => null,
+            'alamat' => 'Bumiayu',
             'kode_jurusan' => 'TKR',
         ]);
         SiswaModel::create([
@@ -27,8 +26,7 @@ class SiswaSeeder extends Seeder
             'nama_siswa' => 'Naylu',
             'jenis_kelamin' => 'P',
             'no_telp' => '081234567899',
-            'stat' => 'T',
-            'foto' => null,
+            'alamat' => 'Bumiayu',
             'kode_jurusan' => 'MM',
         ]);
     }

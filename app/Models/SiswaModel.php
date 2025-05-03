@@ -15,8 +15,11 @@ class SiswaModel extends Model
         "nama_siswa",
         "jenis_kelamin",
         "no_telp",
-        "stat",
-        "foto",
+        "alamat",
         "kode_jurusan",
     ];
+    public function jurusan()
+    {
+        return $this->belongsTo(JurusanModel::class, 'kode_jurusan', 'kode_jurusan');
+    }
 }

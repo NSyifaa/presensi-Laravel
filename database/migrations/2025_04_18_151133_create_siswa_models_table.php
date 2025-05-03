@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('nama_siswa');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('no_telp', 15);
-            $table->enum('stat', ['A', 'T']);
-            $table->text('foto')->nullable();
+            $table->text('alamat');
             $table->string('kode_jurusan', 10);
             $table->timestamps();
 

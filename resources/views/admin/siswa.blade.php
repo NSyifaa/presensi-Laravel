@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="nav-icon fas fa-users"></i> Data Siswa</h3>
+                <h3 class="card-title"><i class="nav-icon fas fa-users"></i> Data Siswa </h3>
             </div>
             <div class="card-body">
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default">
@@ -14,43 +14,41 @@
                     <thead>
                     <tr>
                       <th>No</th>
-                      <th>Tahun Periode</th>
-                      <th>Semester</th>
-                      <th>Status</th>
+                      <th>Siswa</th>
+                      <th>Jurusan</th>
+                      <th>No HP</th>
+                      <th>Alamat</th>
                       <th><center>Aksi</center></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {{-- @foreach ($periode as $item)
+                    @foreach ($siswa as $item)
                     <tr>
                         <td>{{ $loop->iteration; }}</td>
-                        <td>{{ $item->tahun }}</td>
                         <td>
-                            {{ $item->semester == 1 ? 'Ganjil' : 'Genap' }}
+                            {{ $item->nis }} <br>
+                            {{ $item->nama_siswa }}
                         </td>
-
                         <td>
-                            @if ($item->status == 'A')
-                                <span class="badge badge-success">Aktif</span>
-                            @else
-                                <span class="badge badge-danger">Tidak Aktif</span>
-                            @endif
+                            {{ $item->nama_siswa }}
+                        </td>
+                        <td>
+                            {{ $item->no_telp }}
+                        </td>
+                        <td>
+                            {{ $item->alamat }}
                         </td>
                         <td>
                           <center>
-                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-aktif" data-id="{{ $item->id }}" {{ $item->status == 'A' ? 'disabled' : '' }}>
-                                <i class="nav-icon fas fa-check"></i> Aktifkan
-                            </button>
-                            @if ($item->status == 'T')
+                           
                             <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->id }}" id="btn-hapus">
                                 <i class="nav-icon fas fa-trash"></i> Hapus
                             </button>                              
-                            @endif
 
                           </center>
                         </td>
                     </tr>
-                    @endforeach --}}
+                    @endforeach
                     </tbody>
                   </table>
             </div>
