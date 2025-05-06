@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
             PeriodeSeeder::class,
             JurusanSeeder::class,
             KelasSeeder::class,
-            SiswaSeeder::class,
+            // SiswaSeeder::class,
             MapelSeeder::class,
+            KelasJurusanSeeder::class,
         ]);
     }
 }

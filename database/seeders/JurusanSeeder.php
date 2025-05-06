@@ -15,23 +15,23 @@ class JurusanSeeder extends Seeder
     {
         JurusanModel::create([
             'kode_jurusan' => 'TKR',
-            'nama_jurusan' => 'Teknik Kendaraan Motor Ringan',
+            'nama_jurusan' => 'Teknik Kendaraan Ringan',
         ]);
         JurusanModel::create([
             'kode_jurusan' => 'TSM',
-            'nama_jurusan' => 'Teknik dan Bisnis Sepeda Motor',
+            'nama_jurusan' => 'Teknik Sepeda Motor',
         ]);
         JurusanModel::create([
-            'kode_jurusan' => 'MM',
-            'nama_jurusan' => 'Multimedia',
+            'kode_jurusan' => 'DKV',
+            'nama_jurusan' => 'Desain Komunikasi Visual',
         ]);
         JurusanModel::create([
-            'kode_jurusan' => 'BDP',
-            'nama_jurusan' => 'Bisnis Daring dan Pemasaran',
+            'kode_jurusan' => 'TO',
+            'nama_jurusan' => 'Teknik Otomotif',
         ]);
         JurusanModel::create([
             'kode_jurusan' => 'AKL',
-            'nama_jurusan' => 'Akuntansi dan Keuangan Lembaga',
+            'nama_jurusan' => 'Akuntansi',
         ]);
     }
 }

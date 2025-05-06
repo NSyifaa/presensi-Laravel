@@ -13,21 +13,6 @@ class SiswaSeeder extends Seeder
      */
     public function run(): void
     {
-        SiswaModel::create([
-            'nis' => '1234567890',
-            'nama_siswa' => 'Matien',
-            'jenis_kelamin' => 'L',
-            'no_telp' => '081234567890',
-            'alamat' => 'Bumiayu',
-            'kode_jurusan' => 'TKR',
-        ]);
-        SiswaModel::create([
-            'nis' => '22312',
-            'nama_siswa' => 'Naylu',
-            'jenis_kelamin' => 'P',
-            'no_telp' => '081234567899',
-            'alamat' => 'Bumiayu',
-            'kode_jurusan' => 'MM',
-        ]);
+       //
     }
 }

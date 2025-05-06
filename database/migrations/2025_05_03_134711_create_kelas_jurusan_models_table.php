@@ -11,22 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa', function (Blueprint $table) {
+        Schema::create('kelas_jurusan', function (Blueprint $table) {
             $table->id();
-            $table->string('nis');
-            $table->string('nama_siswa');
-            $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->string('no_telp', 15);
-            $table->text('alamat');
-            $table->unsignedBigInteger('id_kls_jurusan');
+            $table->string('nama_kelas', 50);
+            $table->string('kode_jurusan', 10);
+            $table->char('kode_kelas', 3);
             $table->unsignedBigInteger('id_periode');
             $table->timestamps();
 
-            $table->foreign('id_kls_jurusan')->references('id')->on('kelas_jurusan')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('kode_jurusan')->references('kode_jurusan')->on('jurusan')->onUpdate('cascade')->onDelete('restrict');
             $table->foreign('id_periode')->references('id')->on('periode')->onUpdate('cascade')->onDelete('restrict');
-        });
+            $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas')->onUpdate('cascade')->onDelete('restrict');
 
-        
+        });
     }
 
     /**
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists('kelas_jurusan');
     }
 };

@@ -13,10 +13,22 @@
             'icon' => 'fas fa-calendar-alt'
         ],
         [
+            'name' => 'Mata Pelajaran',
+            'route' => '/mapel',
+            'routeName' => 'mapel',
+            'icon' => 'fas fa-book-open'
+        ],
+        [
             'name' => 'Jurusan',
             'route' => '/jurusan',
             'routeName' => 'jurusan',
             'icon' => 'fas fa-university'
+        ],
+        [
+            'name' => 'Kelas Jurusan',
+            'route' => '/kelas_jurusan',
+            'routeName' => 'kelas_jurusan',
+            'icon' => 'fas fa-chalkboard-teacher'
         ],
         [
             'name' => 'Data Siswa',
@@ -29,18 +41,6 @@
             'route' => '#',
             'routeName' => '',
             'icon' => 'fas fa-user'
-        ],
-        [
-            'name' => 'Mata Pelajaran',
-            'route' => '/mapel',
-            'routeName' => 'mapel',
-            'icon' => 'fas fa-book-open'
-        ],
-        [
-            'name' => 'Kelas Mapel',
-            'route' => '#',
-            'routeName' => '',
-            'icon' => 'fas fa-chalkboard-teacher'
         ],
         [
             'name' => 'Presensi',

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\JurusanController;
+use App\Http\Controllers\Admin\KelasJurusanController;
 use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\PeriodeController;
 use App\Http\Controllers\Admin\SiswaController;
@@ -24,5 +25,7 @@ Route::get('/mapel', [MapelController::class, 'index'])->name('a.mapel');
 Route::post('/mapel/add', [MapelController::class, 'store'])->name('a.mapel.add');
 Route::post('/mapel/edit/{id}', [MapelController::class, 'update'])->name('a.mapel.edit');
 Route::delete('/mapel/delete/{id}', [MapelController::class, 'destroy'])->name('a.mapel.delete');
+
+Route::get('/kelas_jurusan', [KelasJurusanController::class, 'index'])->name('a.kelas');
 
 Route::get('/siswa', [SiswaController::class, 'index'])->name('a.siswa');

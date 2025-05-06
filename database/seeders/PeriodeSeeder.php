@@ -14,16 +14,6 @@ class PeriodeSeeder extends Seeder
     public function run(): void
     {
         PeriodeModel::create([
-            'tahun' => '2023/2024',
-            'semester' => '1',
-            'status' => 'T',
-        ]);
-        PeriodeModel::create([
-            'tahun' => '2023/2024',
-            'semester' => '2',
-            'status' => 'T',
-        ]);
-        PeriodeModel::create([
             'tahun' => '2024/2025',
             'semester' => '1',
             'status' => 'T',
