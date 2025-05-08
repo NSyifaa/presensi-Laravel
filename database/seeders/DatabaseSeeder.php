@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             KelasSeeder::class,
             // SiswaSeeder::class,
             MapelSeeder::class,
-            KelasJurusanSeeder::class,
+            // KelasJurusanSeeder::class,
         ]);
     }
 }

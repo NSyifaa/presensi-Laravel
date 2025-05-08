@@ -11,22 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa', function (Blueprint $table) {
-            $table->id();
-            $table->string('nis');
-            $table->string('nama_siswa');
-            $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->string('no_telp', 15);
-            $table->text('alamat');
-            $table->unsignedBigInteger('id_kls_jurusan');
-            $table->unsignedBigInteger('id_periode');
-            $table->timestamps();
+        // Schema::create('siswa', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('nis');
+        //     $table->string('nama_siswa');
+        //     $table->enum('jenis_kelamin', ['L', 'P']);
+        //     $table->string('no_telp', 15);
+        //     $table->text('alamat');
+        //     $table->text('alamat');
+        //     $table->timestamps();
 
-            $table->foreign('id_kls_jurusan')->references('id')->on('kelas_jurusan')->onUpdate('cascade')->onDelete('restrict');
-            $table->foreign('id_periode')->references('id')->on('periode')->onUpdate('cascade')->onDelete('restrict');
-        });
+        //     $table->foreign('id_periode')->references('id')->on('periode')->onUpdate('cascade')->onDelete('restrict');
+        // });
 
-        
     }
 
     /**

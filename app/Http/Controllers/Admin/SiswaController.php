@@ -13,8 +13,8 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $siswa = SiswaModel::with('jurusan')->get();  
-        return view('admin.siswa', compact('siswa'));
+        // $siswa = SiswaModel::with('jurusan')->get();  
+        return view('admin.siswa');
     }
 
     /**

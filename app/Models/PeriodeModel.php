@@ -9,7 +9,7 @@ class PeriodeModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'periode';
+    protected $table = 'tahun_ajaran';
     protected $fillable = [
         "tahun",
         "semester",

@@ -22,7 +22,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($siswa as $item)
+                    {{-- @foreach ($siswa as $item)
                     <tr>
                         <td>{{ $loop->iteration; }}</td>
                         <td>
@@ -48,7 +48,7 @@
                           </center>
                         </td>
                     </tr>
-                    @endforeach
+                    @endforeach --}}
                     </tbody>
                   </table>
             </div>

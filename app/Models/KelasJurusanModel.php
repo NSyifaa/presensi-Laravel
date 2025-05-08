@@ -9,7 +9,7 @@ class KelasJurusanModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'kelas_jurusan';
+    protected $table = 'ta_kelas_jurusan';
     protected $fillable = [
         "nama_kelas",
         "kode_jurusan",
