@@ -17,6 +17,7 @@
                       <th>Nama Kelas</th>
                       <th><center>Kelas</center></th>
                       <th>Jurusan</th>
+                      <th>Jumlah Siswa</th>
                       <th><center>Aksi</center></th>
                     </tr>
                     </thead>

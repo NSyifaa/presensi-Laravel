@@ -17,19 +17,19 @@ class KelasJurusanSeeder extends Seeder
             'nama_kelas' => '10 AKL 1',
             'kode_jurusan' => 'AKL',
             'kode_kelas' => 'X',
-            'id_periode' => 1,
+            'id_ta' => 1,
         ]);
         KelasJurusanModel::create([
             'nama_kelas' => '11 DKV 1',
             'kode_jurusan' => 'DKV',
             'kode_kelas' => 'XI',
-            'id_periode' => 1,
+            'id_ta' => 1,
         ]);
         KelasJurusanModel::create([
             'nama_kelas' => '12 TKR 1',
             'kode_jurusan' => 'TKR',
             'kode_kelas' => 'XII',
-            'id_periode' => 1,
+            'id_ta' => 1,
         ]);
     }
 }

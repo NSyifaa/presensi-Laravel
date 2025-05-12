@@ -14,7 +14,7 @@ class KelasJurusanModel extends Model
         "nama_kelas",
         "kode_jurusan",
         "kode_kelas",
-        "id_periode",
+        "id_ta",
     ];
 
     public function jurusan()
@@ -23,7 +23,7 @@ class KelasJurusanModel extends Model
     }
     public function periode()
     {
-        return $this->belongsTo(PeriodeModel::class, 'id_periode', 'id');
+        return $this->belongsTo(PeriodeModel::class, 'id_ta', 'id');
     }
     public function kelas()
     {
