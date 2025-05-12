@@ -1,15 +1,29 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\KelasJurusanController;
 use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\PeriodeController;
 use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Guru\GuruDashController;
+use App\Http\Controllers\Siswa\SiswaDashController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('layout.main');
-});
+
+Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::post('/', [AuthController::class, 'verify'])->name('verify');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+// Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/dashboard', [AdminDashController::class, 'index'])->name('a.dashboard');
+// });
+// Route::middleware(['auth:guru'])->group(function () {
+    Route::get('/guru/dashboard', [GuruDashController::class, 'index'])->name('g.dashboard');
+// });
+// Route::middleware(['auth:siswa'])->group(function () {
+    Route::get('/siswa/dashboard', [SiswaDashController::class, 'index'])->name('s.dashboard');
+// });
 
 Route::get('/periode', [PeriodeController::class, 'index'])->name('a.periode');
 Route::post('/periode/add', [PeriodeController::class, 'store'])->name('a.periode.add');
