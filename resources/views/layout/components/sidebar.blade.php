@@ -2,8 +2,8 @@
     $menus = [
         [
             'name' => 'Dashboard',
-            'route' => '/',
-            'routeName' => '/',
+            'route' => '/dashboard',
+            'routeName' => 'dashboard',
             'icon' => 'fas fa-tachometer-alt'
         ],
         [
@@ -47,6 +47,12 @@
             'route' => '#',
             'routeName' => '',
             'icon' => 'fas fa-clipboard-check'
+        ],
+        [
+            'name' => 'Keluar',
+            'route' => '/logout',   
+            'routeName' => '',
+            'icon' => 'fas fa-sign-out-alt'
         ],
        
     ];

@@ -12,18 +12,21 @@ use App\Http\Controllers\Siswa\SiswaDashController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::get('/', [AuthController::class, 'index'])->middleware('guest')->name('login');
 Route::post('/', [AuthController::class, 'verify'])->name('verify');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-// Route::middleware(['auth:admin'])->group(function () {
+
+Route::group(['middleware' =>'auth:admin'],function () {
     Route::get('/dashboard', [AdminDashController::class, 'index'])->name('a.dashboard');
-// });
-// Route::middleware(['auth:guru'])->group(function () {
+});
+
+Route::group(['middleware' =>'auth:guru'],function () {
     Route::get('/guru/dashboard', [GuruDashController::class, 'index'])->name('g.dashboard');
-// });
-// Route::middleware(['auth:siswa'])->group(function () {
+});
+
+Route::group(['middleware' =>'auth:siswa'],function () {
     Route::get('/siswa/dashboard', [SiswaDashController::class, 'index'])->name('s.dashboard');
-// });
+});
 
 Route::get('/periode', [PeriodeController::class, 'index'])->name('a.periode');
 Route::post('/periode/add', [PeriodeController::class, 'store'])->name('a.periode.add');
