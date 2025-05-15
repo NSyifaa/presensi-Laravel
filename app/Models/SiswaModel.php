@@ -12,9 +12,9 @@ class SiswaModel extends Model
     protected $table = 'siswa';
     protected $fillable = [
         "nis",
-        "nama_siswa",
-        "jenis_kelamin",
-        "no_telp",
+        "nama",
+        "no_hp",
+        "kelamin",
         "alamat",
         "kode_jurusan",
     ];
