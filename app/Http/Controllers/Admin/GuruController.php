@@ -3,21 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\JurusanModel;
-use App\Models\SiswaModel;
+use App\Models\GuruModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class SiswaController extends Controller
+class GuruController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $siswa = SiswaModel::with('jurusan')->get();  
-        $jurusan = JurusanModel::all();
-        return view('admin.siswa', compact('siswa', 'jurusan'));
+        $guru = GuruModel::get();  
+        return view('admin.guru', compact('guru'));
     }
 
      /**
@@ -26,42 +24,40 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nis' => 'required|string|unique:siswa,nis',
+            'nip' => 'required|string|unique:guru,nip',
             'nama' => 'required|string|max:255',
             'no_hp' => 'required|string|max:15',
             'kelamin' => 'required',
             'alamat' => 'required|required|string|max:255',
-            'jurusan' => 'required|string|max:10',
         ]);
         
         // Check if the period already exists
-        $existingPeriod = SiswaModel::where('nis', $request->nis)->first();
-        if ($existingPeriod) {
+        $existingGuru = GuruModel::where('nip', $request->nip)->first();
+        if ($existingGuru) {
             return response()->json([
                 'status' => 'warning',
-                'message' => 'Data siswa sudah ada.'
+                'message' => 'Data Guru sudah ada.'
             ]); 
         }
         
-        SiswaModel::create([
-            'nis' => $request->nis,
+        GuruModel::create([
+            'nip' => $request->nip,
             'nama' => $request->nama,
             'no_hp' => $request->no_hp,
             'kelamin' => $request->kelamin,
             'alamat' => $request->alamat,
-            'kode_jurusan' => $request->jurusan,
         ]);
 
         User::create([
             'name' => $request->nama,
-            'username' => $request->nis,
-            'password' => bcrypt($request->nis),
-            'role' => 'siswa',
+            'username' => $request->nip,
+            'password' => bcrypt($request->nip),
+            'role' => 'guru',
         ]);
     
         return response()->json([
             'status' => 'success',
-            'message' => 'Data Siswa telah berhasil ditambahkan.'
+            'message' => 'Data guru telah berhasil ditambahkan.'
         ]);
     }
 
@@ -75,14 +71,13 @@ class SiswaController extends Controller
             'no_hp' => 'required|string|max:15',
             'kelamin' => 'required',
             'alamat' => 'required|required|string|max:255',
-            'jurusan' => 'required|string|max:10']);
+        ]);
 
-        SiswaModel::where('nis', $id)->update([
+        GuruModel::where('nip', $id)->update([
             'nama' => $request->nama,
             'no_hp' => $request->no_hp,
             'kelamin' => $request->kelamin,
             'alamat' => $request->alamat,
-            'kode_jurusan' => $request->jurusan,
         ]);
 
         User::where('username', $id)->update([
@@ -91,7 +86,7 @@ class SiswaController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Data siswa telah berhasil diubah.'
+            'message' => 'Data guru telah berhasil diubah.'
         ]);
     }
 
@@ -100,19 +95,19 @@ class SiswaController extends Controller
      */
     public function destroy(string $id)
     {
-        $user       = User::where('username', $id);
-        $siswa      = SiswaModel::where('nis', $id);
-        if ($siswa) {
+        $user      = User::where('username', $id);
+        $guru      = GuruModel::where('nip', $id);
+        if ($guru) {
             $user->delete();
-            $siswa->delete();
+            $guru->delete();
             return response()->json([
                 'status' => 'success',
-                'message' => 'Data siswa berhasil dihapus.'
+                'message' => 'Data guru berhasil dihapus.'
             ]);
         } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Data siswa tidak ditemukan.'
+                'message' => 'Data guru tidak ditemukan.'
             ]);
         }
     }

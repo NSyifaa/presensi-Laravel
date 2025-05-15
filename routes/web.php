@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashController;
+use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\KelasJurusanController;
 use App\Http\Controllers\Admin\MapelController;
@@ -40,6 +41,11 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::delete('/siswa/delete/{id}', [SiswaController::class, 'destroy'])->name('a.siswa.delete');
 
     Route::get('/kelas_jurusan', [KelasJurusanController::class, 'index'])->name('a.kelas');
+
+    Route::get('/guru', [GuruController::class, 'index'])->name('a.guru');
+    Route::post('/guru/add', [GuruController::class, 'store'])->name('a.guru.add');
+    Route::post('/guru/edit/{id}', [GuruController::class, 'update'])->name('a.guru.edit');
+    Route::delete('/guru/delete/{id}', [GuruController::class, 'destroy'])->name('a.guru.delete');
 });
 
 Route::group(['middleware' =>'auth:guru'],function () {

@@ -32,15 +32,15 @@
         ],
         [
             'name' => 'Data Siswa',
-            'route' => 'siswa',
+            'route' => '/siswa',
             'routeName' => 'siswa',
             'icon' => 'fas fa-users'
         ],
         [
             'name' => 'Data Guru',
-            'route' => '#',
-            'routeName' => '',
-            'icon' => 'fas fa-user'
+            'route' => '/guru',
+            'routeName' => 'guru',
+            'icon' => 'fas fa-user-tie'
         ],
         [
             'name' => 'Presensi',
