@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\JurusanExport;
 use App\Http\Controllers\Controller;
 use App\Models\JurusanModel;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JurusanController extends Controller
 {
@@ -99,5 +101,10 @@ class JurusanController extends Controller
                 'message' => 'Data jurusan tidak ditemukan.'
             ]);
         }
+    }
+
+    public function export() 
+    {
+        return Excel::download(new JurusanExport, 'data_jurusan.xlsx');
     }
 }

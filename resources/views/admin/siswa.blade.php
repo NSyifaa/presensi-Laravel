@@ -9,6 +9,9 @@
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default">
                   <i class="nav-icon fas fa-plus"></i>  Tambah Data
                 </button>
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-import">
+                  <i class="nav-icon fas fa-file-excel"></i>  import Data
+                </button>
                 <br><br>
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
@@ -126,6 +129,54 @@
       <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+    <div class="modal fade" id="modal-import">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <i class="nav-icon fas fa-file-excel"></i> Import Data Siswa
+              </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('a.siswa.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6" >
+                            <center>
+                                <h6><b>Template Excel</b></h6>
+                                <a href="download.php?filename=templateklsmk-mhs.xls" class="btn btn-success btn-sm">
+                                    <i class="nav-icon fas fa-file-excel"></i> Download
+                                </a>
+                            </center>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <center>
+                                <h6><b>Data Jurusan</b></h6>
+                                <a href="{{ route('a.jurusan.export') }}" class="btn btn-info btn-sm">
+                                    <i class="nav-icon fas fa-university"></i> Export
+                                </a>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Nama">Upload file</label>
+                        <input type="file" id="file" name="file" class="form-control" accept=".xls,.xlsx" required>
+                    </div> 
+                </div>
+                <div class="modal-footer pull-right">
+                    <button type="submit" class="btn btn-danger" name="impor" style="background-color:#86090f"><i class="nav-icon fas fa-file-excel"></i>Import Data</button>
+                </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
     <script>
         $(document).ready(function() {
             $('#modal-default').on('show.bs.modal', function (event) {

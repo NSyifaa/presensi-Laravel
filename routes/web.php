@@ -29,6 +29,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/jurusan/add', [JurusanController::class, 'store'])->name('a.jurusan.add');
     Route::post('/jurusan/edit/{id}', [JurusanController::class, 'update'])->name('a.jurusan.edit');
     Route::delete('/jurusan/delete/{id}', [JurusanController::class, 'destroy'])->name('a.jurusan.delete');
+    Route::get('/jurusan/export', [JurusanController::class, 'export'])->name('a.jurusan.export');
 
     Route::get('/mapel', [MapelController::class, 'index'])->name('a.mapel');
     Route::post('/mapel/add', [MapelController::class, 'store'])->name('a.mapel.add');
@@ -39,6 +40,8 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/siswa/add', [SiswaController::class, 'store'])->name('a.siswa.add');
     Route::post('/siswa/edit/{id}', [SiswaController::class, 'update'])->name('a.siswa.edit');
     Route::delete('/siswa/delete/{id}', [SiswaController::class, 'destroy'])->name('a.siswa.delete');
+    Route::post('/siswa/import', [SiswaController::class, 'import'])->name('a.siswa.import');
+
 
     Route::get('/kelas_jurusan', [KelasJurusanController::class, 'index'])->name('a.kelas');
 
