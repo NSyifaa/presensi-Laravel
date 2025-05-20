@@ -66,117 +66,118 @@
         </div>
     </div>
     <div class="modal fade" id="modal-default">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-primary">
-            <h4 class="modal-title" >Tambah Siswa</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form id="form-tambah-data" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="nis">NIS</label>
-                    <input type="number" class="form-control" name="nis" id="nis" placeholder="NIS">
-                    <div class="invalid-feedback" id="error-nis"></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title" >Tambah Siswa</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Siswa">
-                    <div class="invalid-feedback" id="error-nama"></div>
-                </div>
-                <div class="form-group">
-                    <label for="jurusan">Jurusan</label>
-                    <select name="jurusan" id="jurusan" class="form-control">
-                        <option value="" selected disabled>Pilih jurusan</option>
-                        @foreach ($jurusan as $item)
-                        <option value="{{ $item->kode_jurusan }}"> [ {{ $item->kode_jurusan }} ] - {{ $item->nama_jurusan }}</option>
-                        @endforeach
-                    </select>
-                    <div class="invalid-feedback" id="error-jurusan"></div>
-                </div>
-                <div class="form-group">
-                    <label for="kelamin">Jenis Kelamin</label>
-                    <select name="kelamin" id="kelamin" class="form-control">
-                        <option value="" selected disabled>Pilih Kelamin</option>
-                        <option value="L">Laki - Laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-                    <div class="invalid-feedback" id="error-kelamin"></div>
-                </div>
-                <div class="form-group">
-                    <label for="no_hp">No HP</label>
-                    <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="No HP" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                    <div class="invalid-feedback" id="error-no_hp"></div>
-                </div>
-                <div class="form-group">
-                    <label for="alamat">Alamat</label>
-                    <textarea class="form-control" name="alamat" id="alamat" cols="20" rows="3"></textarea>
-                    <div class="invalid-feedback" id="error-alamat"></div>
-                </div>
+                <form id="form-tambah-data" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nis">NIS</label>
+                            <input type="number" class="form-control" name="nis" id="nis" placeholder="NIS">
+                            <div class="invalid-feedback" id="error-nis"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Nama</label>
+                            <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Siswa">
+                            <div class="invalid-feedback" id="error-nama"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="jurusan">Jurusan</label>
+                            <select name="jurusan" id="jurusan" class="form-control">
+                                <option value="" selected disabled>Pilih jurusan</option>
+                                @foreach ($jurusan as $item)
+                                <option value="{{ $item->kode_jurusan }}"> [ {{ $item->kode_jurusan }} ] - {{ $item->nama_jurusan }}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback" id="error-jurusan"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="kelamin">Jenis Kelamin</label>
+                            <select name="kelamin" id="kelamin" class="form-control">
+                                <option value="" selected disabled>Pilih Kelamin</option>
+                                <option value="L">Laki - Laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
+                            <div class="invalid-feedback" id="error-kelamin"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_hp">No HP</label>
+                            <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="No HP" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <div class="invalid-feedback" id="error-no_hp"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <textarea class="form-control" name="alamat" id="alamat" cols="20" rows="3"></textarea>
+                            <div class="invalid-feedback" id="error-alamat"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
+                    </div>
+                </form>
             </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-              <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
-            </div>
-          </form>
-
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
+        <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
 
     <div class="modal fade" id="modal-import">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">
-                <i class="nav-icon fas fa-file-excel"></i> Import Data Siswa
-              </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{ route('a.siswa.import') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group col-lg-6" >
-                            <center>
-                                <h6><b>Template Excel</b></h6>
-                                <a href="download.php?filename=templateklsmk-mhs.xls" class="btn btn-success btn-sm">
-                                    <i class="nav-icon fas fa-file-excel"></i> Download
-                                </a>
-                            </center>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="nav-icon fas fa-file-excel"></i> Import Data Siswa
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form-import-data" action="{{ route('a.siswa.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-lg-6" >
+                                <center>
+                                    <h6><b>Template Excel</b></h6>
+                                    <a href="{{ route('a.siswa.download') }}" class="btn btn-success btn-sm">
+                                        <i class="nav-icon fas fa-file-excel"></i> Download
+                                    </a>
+                                </center>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <center>
+                                    <h6><b>Data Jurusan</b></h6>
+                                    <a href="{{ route('a.jurusan.export') }}" class="btn btn-info btn-sm">
+                                        <i class="nav-icon fas fa-university"></i> Export
+                                    </a>
+                                </center>
+                            </div>
                         </div>
-                        <div class="form-group col-lg-6">
-                            <center>
-                                <h6><b>Data Jurusan</b></h6>
-                                <a href="{{ route('a.jurusan.export') }}" class="btn btn-info btn-sm">
-                                    <i class="nav-icon fas fa-university"></i> Export
-                                </a>
-                            </center>
-                        </div>
+                        <div class="form-group">
+                            <label for="file">Upload file</label>
+                            <input type="file" id="file" name="file" class="form-control-file" accept=".xls,.xlsx" required>
+                            <div class="invalid-feedback" id="error-file"></div>
+                        </div> 
                     </div>
-                    <div class="form-group">
-                        <label for="Nama">Upload file</label>
-                        <input type="file" id="file" name="file" class="form-control" accept=".xls,.xlsx" required>
-                    </div> 
-                </div>
-                <div class="modal-footer pull-right">
-                    <button type="submit" class="btn btn-danger" name="impor" style="background-color:#86090f"><i class="nav-icon fas fa-file-excel"></i>Import Data</button>
-                </div>
-            </form>
-          </div>
+                    <div class="modal-footer pull-right">
+                        <button type="submit" class="btn btn-primary" name="impor" id="btn-import"><i class="nav-icon fas fa-file-excel"></i>Import Data</button>
+                    </div>
+                </form>
+            </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
+    </div>
+    <!-- /.modal -->
+    
     <script>
         $(document).ready(function() {
             $('#modal-default').on('show.bs.modal', function (event) {
@@ -371,8 +372,92 @@
                 });
 
             })
+            
+            $('#form-import-data').on('submit', function(e) {
+                e.preventDefault();
+
+                const formData  = new FormData(this);
+                const url = "{{ route('a.siswa.import') }}";
+                const method    = 'POST'; 
+                
+                // Clear previous error messages
+                $('.invalid-feedback').text('').hide();
+                $.ajax({
+                    type: method,
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        $('#btn-import').attr('disabled', 'disabled');
+                        $('#btn-import').html(
+                            '<i class="fa fa-spinner fa-spin mr-1"></i> Menyimpan');
+                    },
+                    complete: function() {
+                        $('#btn-import').removeAttr('disabled');
+                        $('#btn-import').html('Import Data');
+                    },
+                    success: function(response) {
+                    if (response.status === 'warning') {
+                            Toast.fire({
+                                icon: 'warning',
+                                title: response.message
+                            });
+                        } else {
+                            $('#modal-import').modal('hide');
+                            Toast.fire({
+                                icon: 'success',
+                                title: response.message
+                            });
+                            $('#form-import-data')[0].reset();
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2500);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            const errors = xhr.responseJSON.errors;
+
+                            $.each(errors, function(key, value) {
+                                let inputField = $('#' + key);
+                                let errorFeedback = $('#error-' + key);
+
+                                inputField.addClass('is-invalid'); // Tambahkan class is-invalid
+                                errorFeedback.text(value[0]).show(); // Tampilkan pesan error
+                            });
+
+                        } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: xhr.responseJSON.error
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: 'Kesalahan tidak terduga. Silakan coba lagi.'
+                            });
+                        }
+                    }
+                });
+            });
         });
-        
+       
     </script>
+    @if (session('download_error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Download',
+                text: '{{ session('download_error') }}',
+            });
+        </script>
+    @endif
+
     
 @endsection

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\SiswaImport;
 use App\Models\JurusanModel;
 use App\Models\SiswaModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -115,5 +118,32 @@ class SiswaController extends Controller
                 'message' => 'Data siswa tidak ditemukan.'
             ]);
         }
+    }
+
+    public function download()
+    {
+        $filePath = 'dokumen/template/templatesiswa.xls';
+
+        // Pastikan file ada
+        if (!Storage::disk('local')->exists($filePath)) {
+            return redirect()->back()->with('download_error', 'File template tidak ditemukan.');
+        }
+
+        $fullPath = Storage::disk('local')->path($filePath);
+        // dd($fullPath);
+        return response()->download($fullPath, 'templatesiswa.xls');
+    }
+
+    public function import(Request $request)
+    {
+        // $request->validate([
+        //     'file' => 'required|mimes:xls,xlsx',
+        // ]);
+
+        Excel::import(new SiswaImport, $request->file('file'));
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data siswa telah berhasil diimport.'
+        ]);
     }
 }

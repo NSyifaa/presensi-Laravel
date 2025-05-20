@@ -41,6 +41,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/siswa/edit/{id}', [SiswaController::class, 'update'])->name('a.siswa.edit');
     Route::delete('/siswa/delete/{id}', [SiswaController::class, 'destroy'])->name('a.siswa.delete');
     Route::post('/siswa/import', [SiswaController::class, 'import'])->name('a.siswa.import');
+    Route::get('/siswa/download', [SiswaController::class, 'download'])->name('a.siswa.download');
 
 
     Route::get('/kelas_jurusan', [KelasJurusanController::class, 'index'])->name('a.kelas');
