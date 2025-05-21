@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\GuruImport;
 use App\Models\GuruModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuruController extends Controller
 {
@@ -110,5 +113,30 @@ class GuruController extends Controller
                 'message' => 'Data guru tidak ditemukan.'
             ]);
         }
+    }
+    public function download()
+    {
+        $filePath = 'dokumen/template/templateguru.xls';
+
+        // Pastikan file ada
+        if (!Storage::disk('local')->exists($filePath)) {
+            return redirect()->back()->with('download_error', 'File template tidak ditemukan.');
+        }
+
+        $fullPath = Storage::disk('local')->path($filePath);
+        return response()->download($fullPath, 'templateguru.xls');
+    }
+
+    public function import(Request $request)
+    {
+        // $request->validate([
+        //     'file' => 'required|mimes:xls,xlsx',
+        // ]);
+
+        Excel::import(new GuruImport, $request->file('file'));
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data guru telah berhasil diimport.'
+        ]);
     }
 }

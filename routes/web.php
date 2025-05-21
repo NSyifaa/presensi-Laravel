@@ -50,6 +50,8 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/guru/add', [GuruController::class, 'store'])->name('a.guru.add');
     Route::post('/guru/edit/{id}', [GuruController::class, 'update'])->name('a.guru.edit');
     Route::delete('/guru/delete/{id}', [GuruController::class, 'destroy'])->name('a.guru.delete');
+    Route::post('/guru/import', [GuruController::class, 'import'])->name('a.guru.import');
+    Route::get('/guru/download', [GuruController::class, 'download'])->name('a.guru.download');
 });
 
 Route::group(['middleware' =>'auth:guru'],function () {

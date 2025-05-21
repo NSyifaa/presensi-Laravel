@@ -9,6 +9,9 @@
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default">
                   <i class="nav-icon fas fa-plus"></i>  Tambah Data
                 </button>
+                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-import">
+                  <i class="nav-icon fas fa-file-excel"></i>  import Data
+                </button>
                 <br><br>
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
@@ -111,10 +114,49 @@
       <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <div class="modal fade" id="modal-import">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="nav-icon fas fa-file-excel"></i> Import Data Siswa
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form-import-data" action="{{ route('a.guru.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group" >
+                                <h6><b>Template Excel</b></h6>
+                                <a href="{{ route('a.guru.download') }}" class="btn btn-success btn-sm">
+                                    <i class="nav-icon fas fa-file-excel"></i> Download
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="file">Upload file</label>
+                            <input type="file" id="file" name="file" class="form-control-file" accept=".xls,.xlsx" required>
+                            <div class="invalid-feedback" id="error-file"></div>
+                        </div> 
+                    </div>
+                    <div class="modal-footer pull-right">
+                        <button type="submit" class="btn btn-primary" name="impor" id="btn-import"><i class="nav-icon fas fa-file-excel"></i>Import Data</button>
+                    </div>
+                </form>
+            </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
     <script>
         $(document).ready(function() {
             $('#modal-default').on('show.bs.modal', function (event) {
-            $(this).removeAttr('aria-hidden');
+                $(this).removeAttr('aria-hidden');
                 
                 var edit = false;
                 var button = $(event.relatedTarget); 
@@ -305,8 +347,91 @@
                 });
 
             })
+
+            $('#form-import-data').on('submit', function(e) {
+                e.preventDefault();
+
+                const formData  = new FormData(this);
+                const url = "{{ route('a.guru.import') }}";
+                const method    = 'POST'; 
+                
+                // Clear previous error messages
+                $('.invalid-feedback').text('').hide();
+                $.ajax({
+                    type: method,
+                    url: url,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        $('#btn-import').attr('disabled', 'disabled');
+                        $('#btn-import').html(
+                            '<i class="fa fa-spinner fa-spin mr-1"></i> Menyimpan');
+                    },
+                    complete: function() {
+                        $('#btn-import').removeAttr('disabled');
+                        $('#btn-import').html('Import Data');
+                    },
+                    success: function(response) {
+                    if (response.status === 'warning') {
+                            Toast.fire({
+                                icon: 'warning',
+                                title: response.message
+                            });
+                        } else {
+                            $('#modal-import').modal('hide');
+                            Toast.fire({
+                                icon: 'success',
+                                title: response.message
+                            });
+                            $('#form-import-data')[0].reset();
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2500);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            const errors = xhr.responseJSON.errors;
+
+                            $.each(errors, function(key, value) {
+                                let inputField = $('#' + key);
+                                let errorFeedback = $('#error-' + key);
+
+                                inputField.addClass('is-invalid'); // Tambahkan class is-invalid
+                                errorFeedback.text(value[0]).show(); // Tampilkan pesan error
+                            });
+
+                        } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: xhr.responseJSON.error
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: 'Kesalahan tidak terduga. Silakan coba lagi.'
+                            });
+                        }
+                    }
+                });
+            });
         });
         
     </script>
+    @if (session('download_error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Download',
+                text: '{{ session('download_error') }}',
+            });
+        </script>
+    @endif
     
 @endsection

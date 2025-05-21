@@ -22,7 +22,10 @@
                     @foreach ($jurusan as $item)
                     <tr>
                         <td>{{ $loop->iteration; }}</td>
-                        <td>{{ $item->nama_jurusan }}</td>
+                        <td>
+                            [ {{ $item->kode_jurusan }} ] <br>
+                            {{ $item->nama_jurusan }}
+                        </td>
                         <td>
                           <center>
                             <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" data-id="{{ $item->kode_jurusan }}" data-nama="{{ $item->nama_jurusan }}">
