@@ -3,51 +3,75 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="nav-icon fas fa-chalkboard-teacher"></i> Data Kelas Siswa</h3>
+                <h3 class="card-title"><i class="nav-icon fas fa-chalkboard-teacher"></i>  Detail Data Kelas Siswa</h3>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default">
-                  <i class="nav-icon fas fa-plus"></i>  Tambah Data
-                </button>
-                <br><br>
-                <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Nama Kelas</th>
-                      <th><center>Kelas</center></th>
-                      <th>Jurusan</th>
-                      <th><center>Aksi</center></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($kelas as $item)
-                    <tr>
-                        <td>{{ $loop->iteration; }}</td>
-                        <td>{{ $item->nama_kelas }}</td>
-                        <td><center>{{ $item->kode_kelas }}</center></td>
-                        <td>{{ $item->jurusan->nama_jurusan }}</td>
-                        <td>
-                          <center>
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" 
-                                data-id="{{ $item->id }}" 
-                                data-nama="{{ $item->nama_kelas }}" 
-                                data-jurusan="{{ $item->kode_jurusan }}"
-                                data-kelas="{{ $item->kode_kelas }}">
-                                <i class="nav-icon fas fa-edit"></i> Edit
-                            </button>
-                            <a href="{{ route('a.kelas.detail', ['id' => $item->id]) }}" class="btn btn-info btn-xs">
-                                <i class="nav-icon fas fa-info-circle"></i> Detail
-                            </a>
-                            <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->id }}" id="btn-hapus">
-                                <i class="nav-icon fas fa-trash"></i> Hapus
-                            </button>                              
-                          </center>
-                        </td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                  </table>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <table class="table table-bordered table-sm">  
+                            <tbody>
+                                <tr>
+                                    <td><b>Tahun Akademik</b></td>
+                                    <td>{{ $kelas->periode->tahun }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Nama Kelas</b></td>
+                                    <td>{{ $kelas->nama_kelas }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-6">
+                        <table class="table table-bordered table-sm">
+                            <tbody>
+                                <tr>
+                                    <td><b>Kelas</b> </td>
+                                    <td>{{ $kelas->kode_kelas }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Jurusan</b></td>
+                                    <td>{{ $kelas->jurusan->nama_jurusan }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a href="{{ route('a.kelas') }}" class="btn btn-warning btn-sm">
+                        <i class="nav-icon fas fa-chevron-left"></i> kembali
+                        </a>
+                        <br><br>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                            <th>No</th>
+                            <th><center>NIS</center></th>
+                            <th>Nama Siswa</th>
+                            <th><center>Aksi</center></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{-- @foreach ($siswa as $item)
+                            <tr>
+                                <td>{{ $loop->iteration; }}</td>
+                                <td>{{ $item->nama_siswa }}</td>
+                                <td>{{ $item->nisn }}</td>
+                                <td>{{ $item->kelas->kode_kelas }}</td>
+                                <td>
+                                <center>
+                                    <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->id }}" id="btn-hapus">
+                                        <i class="nav-icon fas fa-trash"></i> Hapus
+                                    </button>                              
+                                </center>
+                                </td>
+                            </tr>
+                            @endforeach --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -55,7 +79,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
-                    <h4 class="modal-title" id="title" >Tambah Kelas</h4>
+                    <h4 class="modal-title" id="title" >Tambah Jurusan</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -63,22 +87,7 @@
                 <form id="form-tambah-data" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nama">Nama Kelas</label>
-                            <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Kelas">
-                            <div class="invalid-feedback" id="error-nama"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="kelas">Kelas</label>
-                            <select name="kode_kelas" id="kode_kelas" class="form-control">
-                                <option value="" selected disabled>Pilih Kelas</option>
-                                <option value="X" >X</option>
-                                <option value="XI" >XI</option>
-                                <option value="XII" >XII</option>
-                            </select>                            
-                            <div class="invalid-feedback" id="error-kode_kelas"></div>
-                        </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="jurusan">Jurusan</label>
                             <select name="kode_jurusan" id="kode_jurusan" class="form-control">
                                 <option value="" selected disabled>Pilih jurusan</option>
@@ -87,7 +96,7 @@
                                 @endforeach
                             </select>
                             <div class="invalid-feedback" id="error-kode_jurusan"></div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -101,7 +110,7 @@
     </div>
      <!-- /.modal -->
 
-    <script>
+    {{-- <script>
       $(document).ready(function() {
         
         $('#modal-default').on('show.bs.modal', function (event) {
@@ -285,5 +294,5 @@
       });
     
     </script>
-    
+     --}}
 @endsection

@@ -43,8 +43,11 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/siswa/import', [SiswaController::class, 'import'])->name('a.siswa.import');
     Route::get('/siswa/download', [SiswaController::class, 'download'])->name('a.siswa.download');
 
-
     Route::get('/kelas_jurusan', [KelasJurusanController::class, 'index'])->name('a.kelas');
+    Route::post('/kelas_jurusan/add', [KelasJurusanController::class, 'store'])->name('a.kelas.add');
+    Route::post('/kelas_jurusan/edit/{id}', [KelasJurusanController::class, 'update'])->name('a.kelas.edit');
+    Route::delete('/kelas_jurusan/delete/{id}', [KelasJurusanController::class, 'destroy'])->name('a.kelas.delete');
+    Route::get('/kelas_jurusan/detail/{id}', [KelasJurusanController::class, 'detail'])->name('a.kelas.detail');
 
     Route::get('/guru', [GuruController::class, 'index'])->name('a.guru');
     Route::post('/guru/add', [GuruController::class, 'store'])->name('a.guru.add');
