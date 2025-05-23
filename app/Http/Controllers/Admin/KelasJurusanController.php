@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\JurusanModel;
 use App\Models\KelasJurusanModel;
+use App\Models\KelasSiswaModel;
 use App\Models\PeriodeModel;
+use App\Models\SiswaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -17,12 +19,12 @@ class KelasJurusanController extends Controller
     public function index()
     {
         $taAktif = PeriodeModel::where('status', 'A')->first();
-        $kelas = KelasJurusanModel::with(['jurusan', 'kelas', 'periode'])
+        $kelas = KelasJurusanModel::with(['jurusan', 'kelas', 'periode', 'kelasSiswa'])
             ->where('id_ta', $taAktif->id)
             ->get();
         $jurusan = JurusanModel::all();
 
-        return view('admin.kelas_jurusan.kelas_jurusan', compact('kelas', 'jurusan'));
+        return view('admin.kelas_jurusan.kelas_jurusan', compact('kelas', 'jurusan', 'taAktif'));
     }
 
     /**
@@ -125,7 +127,39 @@ class KelasJurusanController extends Controller
             ->where('id', $id)
             ->first();
 
-        log::info($kelas);
-        return view('admin.kelas_jurusan.kelas_jurusan_detail', compact('kelas'));
+        $kelasSiswa = KelasSiswaModel::where('id_kls_jurusan', $id)
+        ->with('siswa')
+        ->get();
+        // log::info($kelas);
+        $siswa = SiswaModel::all();
+        return view('admin.kelas_jurusan.kelas_jurusan_detail', compact('kelas', 'kelasSiswa','siswa'));
+    }
+
+    public function addSiswa(Request $request, string $id)
+    {
+        $request->validate([
+            'nis' => 'required',
+        ]);
+
+        $kelasSiswa = KelasSiswaModel::where('id_kls_jurusan', $id)
+            ->where('nis', $request->nis)
+            ->first();
+        
+            if ($kelasSiswa) {
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Data siswa sudah terdaftar.'
+            ]);
+        }
+        
+        KelasSiswaModel::create([
+            'id_kls_jurusan' => $id,
+            'nis' => $request->nis,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data siswa telah berhasil ditambahkan.'
+        ]);
     }
 }

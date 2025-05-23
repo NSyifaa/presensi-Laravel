@@ -14,4 +14,10 @@ class KelasSiswaModel extends Model
         "id_kls_jurusan",
         "nis",
     ];
+
+    // Relasi ke model Siswa berdasarkan nis
+    public function siswa()
+    {
+        return $this->belongsTo(SiswaModel::class, 'nis', 'nis');
+    }
 }

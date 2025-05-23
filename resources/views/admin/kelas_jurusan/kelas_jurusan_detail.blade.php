@@ -12,7 +12,7 @@
                             <tbody>
                                 <tr>
                                     <td><b>Tahun Akademik</b></td>
-                                    <td>{{ $kelas->periode->tahun }}</td>
+                                    <td>{{ $kelas->periode->tahun}} - {{ $kelas->periode->semester == 1 ? 'Ganjil' : 'Genap'}}</td>
                                 </tr>
                                 <tr>
                                     <td><b>Nama Kelas</b></td>
@@ -42,23 +42,25 @@
                         <a href="{{ route('a.kelas') }}" class="btn btn-warning btn-sm">
                         <i class="nav-icon fas fa-chevron-left"></i> kembali
                         </a>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default" data-id="{{ $kelas->id }}">
+                            <i class="nav-icon fas fa-plus"></i>  Tambah Data
+                        </button>
                         <br><br>
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                            <th>No</th>
+                            <th style="width: 5%;">No</th>
                             <th><center>NIS</center></th>
                             <th>Nama Siswa</th>
                             <th><center>Aksi</center></th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{-- @foreach ($siswa as $item)
+                            @foreach ($kelasSiswa as $item)
                             <tr>
                                 <td>{{ $loop->iteration; }}</td>
-                                <td>{{ $item->nama_siswa }}</td>
-                                <td>{{ $item->nisn }}</td>
-                                <td>{{ $item->kelas->kode_kelas }}</td>
+                                <td><center>{{ $item->nis }}</center></td>
+                                <td>{{ $item->siswa->nama }}</td>
                                 <td>
                                 <center>
                                     <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->id }}" id="btn-hapus">
@@ -67,7 +69,7 @@
                                 </center>
                                 </td>
                             </tr>
-                            @endforeach --}}
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -79,7 +81,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
-                    <h4 class="modal-title" id="title" >Tambah Jurusan</h4>
+                    <h4 class="modal-title" id="title" >Tambah Siswa kelas</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -87,16 +89,16 @@
                 <form id="form-tambah-data" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        {{-- <div class="form-group">
-                            <label for="jurusan">Jurusan</label>
-                            <select name="kode_jurusan" id="kode_jurusan" class="form-control">
-                                <option value="" selected disabled>Pilih jurusan</option>
-                                @foreach ($jurusan as $item)
-                                <option value="{{ $item->kode_jurusan }}"> [ {{ $item->kode_jurusan }} ] - {{ $item->nama_jurusan }}</option>
+                        <div class="form-group">
+                            <label for="siswa">Siswa</label>
+                            <select name="nis" id="nis" class="form-control">
+                                <option value="" selected disabled>Pilih siswa</option>
+                                @foreach ($siswa as $item)
+                                <option value="{{ $item->nis }}"> [ {{ $item->nis }} ] - {{ $item->nama }}</option>
                                 @endforeach
                             </select>
-                            <div class="invalid-feedback" id="error-kode_jurusan"></div>
-                        </div> --}}
+                            <div class="invalid-feedback" id="error-nis"></div>
+                        </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -110,7 +112,7 @@
     </div>
      <!-- /.modal -->
 
-    {{-- <script>
+    <script>
       $(document).ready(function() {
         
         $('#modal-default').on('show.bs.modal', function (event) {
@@ -119,38 +121,17 @@
             var edit = false;
             var button  = $(event.relatedTarget); 
             var idKelas = button.data('id'); 
-            var nama    = button.data('nama');
-            var jurusan = button.data('jurusan');
-            var kelas   = button.data('kelas');
 
-            if (idKelas) {
-                $('#title').text('Edit Kelas');
-                $('#nama').val(nama);
-                $('#kode_jurusan').val(jurusan);
-                $('#kode_kelas').val(kelas);
-                $('#form-tambah-data').data('edit', true);
-                $('#form-tambah-data').data('id', idKelas);
-            } else {
-                $('#title').text('Tambah Kelas');
-                $('#nama').val('');
-                $('#kode_jurusan').val('');
-                $('#kode_kelas').val('');
-                $('#form-tambah-data').data('edit', false);
-                $('#form-tambah-data').data('id', null);
-            }
+            $('#form-tambah-data').data('id', idKelas);
         });
 
         $('#form-tambah-data').on('submit', function(e) {
             e.preventDefault();
 
             const formData  = new FormData(this);
-            const isEdit    = $(this).data('edit');
             const idKelas   = $(this).data('id');
 
-            const url = isEdit
-              ? '/kelas_jurusan/edit/' + idKelas
-              : "{{ route('a.kelas.add') }}";
-
+            const url       = '/kelas_jurusan/add/' + idKelas;
             const method    = 'POST'; 
             
             // Clear previous error messages
@@ -294,5 +275,4 @@
       });
     
     </script>
-     --}}
 @endsection

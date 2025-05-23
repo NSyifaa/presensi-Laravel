@@ -7,7 +7,7 @@
             'icon' => 'fas fa-tachometer-alt'
         ],
         [
-            'name' => 'Periode Akademik',
+            'name' => 'Tahun Ajaran',
             'route' => '/periode',
             'routeName' => 'periode',
             'icon' => 'fas fa-calendar-alt'
@@ -64,9 +64,9 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
        
-            @foreach ($menus as $menu)
+           @foreach ($menus as $menu)
                 <li class="nav-item">
-                    <a href="{{ $menu['route'] }}" class="nav-link {{ request()->path() == $menu['routeName'] ? 'active' : '' }} ">
+                    <a href="{{ $menu['route'] }}" class="nav-link {{ request()->is(ltrim($menu['route'], '/') . '*') ? 'active' : '' }}">
                         <i class="nav-icon {{ $menu['icon'] }}"></i>
                         <p>
                             {{ $menu['name'] }}

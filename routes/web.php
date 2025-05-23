@@ -48,6 +48,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/kelas_jurusan/edit/{id}', [KelasJurusanController::class, 'update'])->name('a.kelas.edit');
     Route::delete('/kelas_jurusan/delete/{id}', [KelasJurusanController::class, 'destroy'])->name('a.kelas.delete');
     Route::get('/kelas_jurusan/detail/{id}', [KelasJurusanController::class, 'detail'])->name('a.kelas.detail');
+    Route::post('/kelas_jurusan/add/{id}', [KelasJurusanController::class, 'addSiswa'])->name('a.kelas.add.siswa');
 
     Route::get('/guru', [GuruController::class, 'index'])->name('a.guru');
     Route::post('/guru/add', [GuruController::class, 'store'])->name('a.guru.add');

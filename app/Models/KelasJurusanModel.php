@@ -29,4 +29,10 @@ class KelasJurusanModel extends Model
     {
         return $this->belongsTo(KelasModel::class, 'kode_kelas', 'kode_kelas');
     }
+    public function kelasSiswa()
+    {
+        return $this->hasMany(KelasSiswaModel::class, 'id_kls_jurusan', 'id');
+    }
+
+    
 }

@@ -6,6 +6,8 @@
                 <h3 class="card-title"><i class="nav-icon fas fa-chalkboard-teacher"></i> Data Kelas Siswa</h3>
             </div>
             <div class="card-body">
+                 <h5>Tahun Akademik : {{ $taAktif->tahun }} {{ $taAktif->semester == 1 ? 'Ganjil' : 'Genap' }}</h5>
+                <br>
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default">
                   <i class="nav-icon fas fa-plus"></i>  Tambah Data
                 </button>
@@ -17,16 +19,18 @@
                       <th>Nama Kelas</th>
                       <th><center>Kelas</center></th>
                       <th>Jurusan</th>
+                      <th><center>Jumlah Siswa</center></th>
                       <th><center>Aksi</center></th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($kelas as $item)
                     <tr>
-                        <td>{{ $loop->iteration; }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->nama_kelas }}</td>
                         <td><center>{{ $item->kode_kelas }}</center></td>
                         <td>{{ $item->jurusan->nama_jurusan }}</td>
+                        <td><center>{{ $item->kelasSiswa()->count() }}</center></td>
                         <td>
                           <center>
                             <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" 
