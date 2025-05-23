@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><i class="nav-icon fas fa-chalkboard-teacher"></i> Data Kelas Siswa</h3>
+                <h3 class="card-title"><i class="nav-icon fas fa-chalkboard-teacher"></i> Data KBM</h3>
             </div>
             <div class="card-body">
                 <h5>Tahun Akademik : {{ $taAktif->tahun }} {{ $taAktif->semester == 1 ? 'Ganjil' : 'Genap' }}</h5>
@@ -16,33 +16,33 @@
                     <thead>
                     <tr>
                       <th>No</th>
-                      <th>Nama Kelas</th>
-                      <th><center>Kelas</center></th>
-                      <th>Jurusan</th>
-                      <th><center>Jumlah Siswa</center></th>
+                      <th>Nama KBM</th>
+                      <th>Guru</th>
+                      <th>Waktu</th>
                       <th><center>Aksi</center></th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($kelas as $item)
+                    @foreach ($kbm as $item)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->nama_kelas }}</td>
-                        <td><center>{{ $item->kode_kelas }}</center></td>
-                        <td>{{ $item->jurusan->nama_jurusan }}</td>
-                        <td><center>{{ $item->kelasSiswa()->count() }}</center></td>
+                        <td>{{ $loop->iteration; }}</td>
+                        <td>
+                            {{ $item->mapel->nama_mapel }} <br>
+                            {{ $item->kelas->nama_kelas }}
+                        </td>
+                        <td>
+                            {{ $item->guru->nip }} <br>
+                            {{ $item->guru->nama }}
+                        </td>
+                        <td>
+                            {{ hariNum($item->hari) }} <br>
+                            {{ $item->jam_mulai }} - {{ $item->jam_selesai }} <br>
+                        </td>
                         <td>
                           <center>
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" 
-                                data-id="{{ $item->id }}" 
-                                data-nama="{{ $item->nama_kelas }}" 
-                                data-jurusan="{{ $item->kode_jurusan }}"
-                                data-kelas="{{ $item->kode_kelas }}">
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" data-id="{{ $item->id }}" data-nama="{{ $item->nama_mapel }}">
                                 <i class="nav-icon fas fa-edit"></i> Edit
                             </button>
-                            <a href="{{ route('a.kelas.detail', ['id' => $item->id]) }}" class="btn btn-info btn-xs">
-                                <i class="nav-icon fas fa-info-circle"></i> Detail
-                            </a>
                             <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->id }}" id="btn-hapus">
                                 <i class="nav-icon fas fa-trash"></i> Hapus
                             </button>                              
@@ -56,80 +56,60 @@
         </div>
     </div>
     <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h4 class="modal-title" id="title" >Tambah Kelas</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="form-tambah-data" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nama">Nama Kelas</label>
-                            <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Kelas">
-                            <div class="invalid-feedback" id="error-nama"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="kelas">Kelas</label>
-                            <select name="kode_kelas" id="kode_kelas" class="form-control">
-                                <option value="" selected disabled>Pilih Kelas</option>
-                                <option value="X" >X</option>
-                                <option value="XI" >XI</option>
-                                <option value="XII" >XII</option>
-                            </select>                            
-                            <div class="invalid-feedback" id="error-kode_kelas"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="jurusan">Jurusan</label>
-                            <select name="kode_jurusan" id="kode_jurusan" class="form-control">
-                                <option value="" selected disabled>Pilih jurusan</option>
-                                @foreach ($jurusan as $item)
-                                <option value="{{ $item->kode_jurusan }}"> [ {{ $item->kode_jurusan }} ] - {{ $item->nama_jurusan }}</option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback" id="error-kode_jurusan"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
-                    </div>
-                </form>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <h4 class="modal-title" id="title" >Tambah KBM</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="form-tambah-data" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="mapel">Nama Mapel</label>
+                <input type="hidden" class="form-control" name="kode_mapel" id="kode_mapel">
+                <input type="text" class="form-control" name="mapel" id="mapel" placeholder="Masukan Mapel">
+                <div class="invalid-feedback" id="error-mapel"></div>
+              </div>
             </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-     <!-- /.modal -->
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+              <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
+            </div>
+          </form>
 
-    <script>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    {{-- <script>
       $(document).ready(function() {
         
         $('#modal-default').on('show.bs.modal', function (event) {
           $(this).removeAttr('aria-hidden');
             
             var edit = false;
-            var button  = $(event.relatedTarget); 
-            var idKelas = button.data('id'); 
-            var nama    = button.data('nama');
-            var jurusan = button.data('jurusan');
-            var kelas   = button.data('kelas');
+            var button = $(event.relatedTarget); 
+            var id_mapel = button.data('id'); 
+            var nama = button.data('nama');
 
-            if (idKelas) {
-                $('#title').text('Edit Kelas');
-                $('#nama').val(nama);
-                $('#kode_jurusan').val(jurusan);
-                $('#kode_kelas').val(kelas);
+            if (id_mapel) {
+                $('#title').text('Edit Mapel');
+                $('#mapel').val(nama);
+                $('#kode_mapel').val(id_mapel);
+                $('#kode_mapel').attr('readonly', true);
                 $('#form-tambah-data').data('edit', true);
-                $('#form-tambah-data').data('id', idKelas);
+                $('#form-tambah-data').data('id', id_mapel);
             } else {
-                $('#title').text('Tambah Kelas');
-                $('#nama').val('');
-                $('#kode_jurusan').val('');
-                $('#kode_kelas').val('');
+                $('#title').text('Tambah mapel');
+                $('#kode_mapel').val('');
+                $('#mapel').val('');
+                $('#kode_mapel').attr('readonly', false);
                 $('#form-tambah-data').data('edit', false);
                 $('#form-tambah-data').data('id', null);
             }
@@ -140,11 +120,11 @@
 
             const formData  = new FormData(this);
             const isEdit    = $(this).data('edit');
-            const idKelas   = $(this).data('id');
+            const idMapel = $(this).data('id');
 
             const url = isEdit
-              ? '/kelas_jurusan/edit/' + idKelas
-              : "{{ route('a.kelas.add') }}";
+              ? '/mapel/edit/' + idMapel
+              : "{{ route('a.mapel.add') }}";
 
             const method    = 'POST'; 
             
@@ -213,13 +193,14 @@
                       }
                   }
             });
+
         });
 
         $('.btn-hapus').on('click', function (e) {
 
             var button = $(this); 
-            var id_kelas = button.data('id') 
-            var url = "{{ route('a.kelas.delete', ':id') }}".replace(':id', id_kelas);
+            var id_mapel = button.data('id') 
+            var url = "{{ route('a.mapel.delete', ':id') }}".replace(':id', id_mapel);
             var method = 'DELETE';
 
             Swal.fire({
@@ -240,7 +221,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data: {
-                            id : id_kelas
+                            id_periode: id_mapel
                         },
                         
                         processData: false,
@@ -260,6 +241,7 @@
                                 icon: 'success',
                                 title: response.message
                             });
+                            $('#form-tambah-data')[0].reset();
                             setTimeout(function() {
                                 location.reload();
                             }, 2500);
@@ -283,11 +265,13 @@
                             }
                         }
                     });
+                   
                 }
             });
+
         })
       });
     
-    </script>
+    </script> --}}
     
 @endsection

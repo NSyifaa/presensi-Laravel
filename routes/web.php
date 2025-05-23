@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashController;
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\JurusanController;
+use App\Http\Controllers\Admin\KBMController;
 use App\Http\Controllers\Admin\KelasJurusanController;
 use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\PeriodeController;
@@ -56,6 +57,9 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::delete('/guru/delete/{id}', [GuruController::class, 'destroy'])->name('a.guru.delete');
     Route::post('/guru/import', [GuruController::class, 'import'])->name('a.guru.import');
     Route::get('/guru/download', [GuruController::class, 'download'])->name('a.guru.download');
+
+    Route::get('/kbm', [KBMController::class, 'index'])->name('a.kbm');
+
 });
 
 Route::group(['middleware' =>'auth:guru'],function () {

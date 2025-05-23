@@ -28,7 +28,7 @@
             'name' => 'Kelas Jurusan',
             'route' => '/kelas_jurusan',
             'routeName' => 'kelas_jurusan',
-            'icon' => 'fas fa-chalkboard-teacher'
+            'icon' => 'fas fa-chalkboard'
         ],
         [
             'name' => 'Data Siswa',
@@ -41,6 +41,12 @@
             'route' => '/guru',
             'routeName' => 'guru',
             'icon' => 'fas fa-user-tie'
+        ],
+        [
+            'name' => 'KBM',
+            'route' => '/kbm',
+            'routeName' => 'kbm',
+            'icon' => 'fas fa-chalkboard-teacher'
         ],
         [
             'name' => 'Presensi',
