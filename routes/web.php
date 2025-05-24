@@ -59,7 +59,9 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::get('/guru/download', [GuruController::class, 'download'])->name('a.guru.download');
 
     Route::get('/kbm', [KBMController::class, 'index'])->name('a.kbm');
-
+    Route::post('/kbm/add', [KBMController::class, 'store'])->name('a.kbm.add');
+    Route::post('/kbm/edit/{id}', [KBMController::class, 'update'])->name('a.kbm.edit');
+    Route::delete('/kbm/delete/{id}', [KBMController::class, 'destroy'])->name('a.kbm.delete');
 });
 
 Route::group(['middleware' =>'auth:guru'],function () {

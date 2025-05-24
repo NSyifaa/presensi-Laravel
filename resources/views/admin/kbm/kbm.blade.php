@@ -40,7 +40,14 @@
                         </td>
                         <td>
                           <center>
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" data-id="{{ $item->id }}" data-nama="{{ $item->nama_mapel }}">
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" 
+                            data-id="{{ $item->id }}"
+                            data-guru= "{{ $item->guru->nip }}"
+                            data-mapel="{{ $item->mapel->id }}"
+                            data-kelas="{{ $item->kelas->id }}"
+                            data-hari="{{ $item->hari }}"
+                            data-jam_mulai="{{ $item->jam_mulai }}"
+                            data-jam_selesai="{{ $item->jam_selesai }}">
                                 <i class="nav-icon fas fa-edit"></i> Edit
                             </button>
                             <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->id }}" id="btn-hapus">
@@ -67,12 +74,62 @@
           <form id="form-tambah-data" enctype="multipart/form-data">
             @csrf
             <div class="modal-body">
-              <div class="form-group">
-                <label for="mapel">Nama Mapel</label>
-                <input type="hidden" class="form-control" name="kode_mapel" id="kode_mapel">
-                <input type="text" class="form-control" name="mapel" id="mapel" placeholder="Masukan Mapel">
-                <div class="invalid-feedback" id="error-mapel"></div>
-              </div>
+                <div class="form-group">
+                    <label for="mapel">Guru</label>
+                    <select name="nip" id="nip" class="form-control">
+                        <option value="" selected disabled>Pilih Guru</option>
+                        @foreach ($guru as $item)
+                            <option value="{{ $item->nip }}"> [ {{ $item->nip }} ] - {{ $item->nama }}</option>
+                        @endforeach
+                    </select>
+                    <div class="invalid-feedback" id="error-nip"></div>
+                </div>
+                <div class="form-group">
+                    <label for="mapel">Mapel</label>
+                    <select name="kode_mapel" id="kode_mapel" class="form-control">
+                        <option value="" selected disabled>Pilih Mapel</option>
+                        @foreach ($mapel as $item)
+                            <option value="{{ $item->id }}"> {{ $item->nama_mapel }}</option>
+                        @endforeach
+                    </select>
+                    <div class="invalid-feedback" id="error-kode_mapel"></div>
+                </div>
+                <div class="form-group">
+                    <label for="kelas">Kelas</label>
+                    <select name="kode_kelas" id="kode_kelas" class="form-control">
+                        <option value="" selected disabled>Pilih kelas</option>
+                        @foreach ($kelas as $item)
+                            <option value="{{ $item->id }}"> {{ $item->nama_kelas }}</option>
+                        @endforeach
+                    </select>
+                    <div class="invalid-feedback" id="error-kode_kelas"></div>
+                </div>
+                <div class="form-group">
+                    <label for="hari">Hari</label>
+                        <select name="hari" id="hari" class="form-control">
+                            <option value="" selected disabled> Pilih Hari</option>
+                            @for ($hari = 1; $hari <= 7; $hari++)
+                                <option value="{{ $hari }}" {{ old('hari') == $hari ? 'selected' : '' }}>{{ hariNum($hari) }}</option>
+                            @endfor
+                        </select>
+                    <div class="invalid-feedback" id="error-hari"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="jam_mulai">Jam Mulai</label>
+                            <input type="time" class="form-control" id="jam_mulai" name="jam_mulai" value="{{ old('jam_mulai') }}">
+                            <div class="invalid-feedback" id="error-jam_mulai"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                         <div class="form-group">
+                            <label for="jam_selesai">Jam Selesai</label>
+                            <input type="time" class="form-control" id="jam_selesai" name="jam_selesai" value="{{ old('jam_selesai') }}">
+                            <div class="invalid-feedback" id="error-jam_selesai"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -87,29 +144,40 @@
     </div>
     <!-- /.modal -->
 
-    {{-- <script>
-      $(document).ready(function() {
-        
+    <script>
+    $(document).ready(function() {
+       
         $('#modal-default').on('show.bs.modal', function (event) {
-          $(this).removeAttr('aria-hidden');
+            $(this).removeAttr('aria-hidden');
             
             var edit = false;
             var button = $(event.relatedTarget); 
-            var id_mapel = button.data('id'); 
-            var nama = button.data('nama');
+            var id_kbm = button.data('id'); 
+            var guru = button.data('guru');
+            var mapel = button.data('mapel');
+            var kelas = button.data('kelas');
+            var hari = button.data('hari');
+            var jam_mulai = button.data('jam_mulai');
+            var jam_selesai = button.data('jam_selesai');
 
-            if (id_mapel) {
+            if (id_kbm) {
                 $('#title').text('Edit Mapel');
-                $('#mapel').val(nama);
-                $('#kode_mapel').val(id_mapel);
-                $('#kode_mapel').attr('readonly', true);
+                $('#nip').val(guru);
+                $('#kode_mapel').val(mapel);
+                $('#kode_kelas').val(kelas);
+                $('#hari').val(hari);
+                $('#jam_mulai').val(jam_mulai);
+                $('#jam_selesai').val(jam_selesai);
                 $('#form-tambah-data').data('edit', true);
-                $('#form-tambah-data').data('id', id_mapel);
+                $('#form-tambah-data').data('id', id_kbm);
             } else {
                 $('#title').text('Tambah mapel');
+                $('#nip').val('');
                 $('#kode_mapel').val('');
-                $('#mapel').val('');
-                $('#kode_mapel').attr('readonly', false);
+                $('#kode_kelas').val('');
+                $('#hari').val('');
+                $('#jam_mulai').val('');
+                $('#jam_selesai').val('');
                 $('#form-tambah-data').data('edit', false);
                 $('#form-tambah-data').data('id', null);
             }
@@ -120,11 +188,11 @@
 
             const formData  = new FormData(this);
             const isEdit    = $(this).data('edit');
-            const idMapel = $(this).data('id');
+            const idKBM     = $(this).data('id');
 
             const url = isEdit
-              ? '/mapel/edit/' + idMapel
-              : "{{ route('a.mapel.add') }}";
+              ? '/kbm/edit/' + idKBM
+              : "{{ route('a.kbm.add') }}";
 
             const method    = 'POST'; 
             
@@ -199,8 +267,8 @@
         $('.btn-hapus').on('click', function (e) {
 
             var button = $(this); 
-            var id_mapel = button.data('id') 
-            var url = "{{ route('a.mapel.delete', ':id') }}".replace(':id', id_mapel);
+            var idKBM = button.data('id') 
+            var url = "{{ route('a.kbm.delete', ':id') }}".replace(':id', idKBM);
             var method = 'DELETE';
 
             Swal.fire({
@@ -221,7 +289,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data: {
-                            id_periode: id_mapel
+                            idKBM : idKBM
                         },
                         
                         processData: false,
@@ -265,13 +333,11 @@
                             }
                         }
                     });
-                   
                 }
             });
-
         })
-      });
+    });
     
-    </script> --}}
+    </script>
     
 @endsection
