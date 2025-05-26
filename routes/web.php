@@ -43,6 +43,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::delete('/siswa/delete/{id}', [SiswaController::class, 'destroy'])->name('a.siswa.delete');
     Route::post('/siswa/import', [SiswaController::class, 'import'])->name('a.siswa.import');
     Route::get('/siswa/download', [SiswaController::class, 'download'])->name('a.siswa.download');
+    Route::get('/siswa/export', [SiswaController::class, 'export'])->name('a.siswa.export');
 
     Route::get('/kelas_jurusan', [KelasJurusanController::class, 'index'])->name('a.kelas');
     Route::post('/kelas_jurusan/add', [KelasJurusanController::class, 'store'])->name('a.kelas.add');
@@ -50,6 +51,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::delete('/kelas_jurusan/delete/{id}', [KelasJurusanController::class, 'destroy'])->name('a.kelas.delete');
     Route::get('/kelas_jurusan/detail/{id}', [KelasJurusanController::class, 'detail'])->name('a.kelas.detail');
     Route::post('/kelas_jurusan/add/{id}', [KelasJurusanController::class, 'addSiswa'])->name('a.kelas.add.siswa');
+    Route::get('/kelas_jurusan/download', [KelasJurusanController::class, 'download'])->name('a.kelas.download');
 
     Route::get('/guru', [GuruController::class, 'index'])->name('a.guru');
     Route::post('/guru/add', [GuruController::class, 'store'])->name('a.guru.add');

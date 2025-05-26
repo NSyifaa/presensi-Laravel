@@ -10,6 +10,7 @@ use App\Models\PeriodeModel;
 use App\Models\SiswaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class KelasJurusanController extends Controller
 {
@@ -161,5 +162,19 @@ class KelasJurusanController extends Controller
             'status' => 'success',
             'message' => 'Data siswa telah berhasil ditambahkan.'
         ]);
+    }
+
+    public function download()
+    {
+        $filePath = 'dokumen/template/template_siswa_kls.xls';
+
+        // Pastikan file ada
+        if (!Storage::disk('local')->exists($filePath)) {
+            return redirect()->back()->with('download_error', 'File template tidak ditemukan.');
+        }
+
+        $fullPath = Storage::disk('local')->path($filePath);
+        // dd($fullPath);
+        return response()->download($fullPath, 'template_siswa_kls.xls');
     }
 }

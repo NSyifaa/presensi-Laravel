@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\SiswaExport;
 use App\Http\Controllers\Controller;
 use App\Imports\SiswaImport;
 use App\Models\JurusanModel;
@@ -145,5 +146,10 @@ class SiswaController extends Controller
             'status' => 'success',
             'message' => 'Data siswa telah berhasil diimport.'
         ]);
+    }
+
+    public function export() 
+    {
+        return Excel::download(new SiswaExport, 'data_siswa.xlsx');
     }
 }
