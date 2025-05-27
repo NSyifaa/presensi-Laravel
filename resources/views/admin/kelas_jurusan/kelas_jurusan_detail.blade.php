@@ -126,7 +126,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form-import-data" action="{{ route('a.siswa.import') }}" method="POST" enctype="multipart/form-data">
+                <form id="form-import-data" action=" {{ route('a.kelas.import', $kelas->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -149,6 +149,7 @@
                         </div>
                         <div class="form-group">
                             <label for="file">Upload file</label>
+                            <input type="hidden" id="id_kls" name="id_kls" class="form-control" value="{{ $kelas->id }}">
                             <input type="file" id="file" name="file" class="form-control-file" accept=".xls,.xlsx" required>
                             <div class="invalid-feedback" id="error-file"></div>
                         </div> 
@@ -165,7 +166,7 @@
     <!-- /.modal -->
 
     <script>
-      $(document).ready(function() {
+    $(document).ready(function() {
         
         $('#modal-default').on('show.bs.modal', function (event) {
           $(this).removeAttr('aria-hidden');
@@ -324,7 +325,82 @@
                 }
             });
         })
-      });
+
+        $('#form-import-data').on('submit', function(e) {
+            e.preventDefault();
+
+            const formData  = new FormData(this);
+            const id        = $('#id_kls').val(); 
+            const url       = "{{ route('a.kelas.import', ':id') }}".replace(':id', id);
+            const method    = 'POST'; 
+            
+            // Clear previous error messages
+            $('.invalid-feedback').text('').hide();
+            $.ajax({
+                type: method,
+                url: url,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    $('#btn-import').attr('disabled', 'disabled');
+                    $('#btn-import').html(
+                        '<i class="fa fa-spinner fa-spin mr-1"></i> Menyimpan');
+                },
+                complete: function() {
+                    $('#btn-import').removeAttr('disabled');
+                    $('#btn-import').html('Import Data');
+                },
+                success: function(response) {
+                if (response.status === 'warning') {
+                        Toast.fire({
+                            icon: 'warning',
+                            title: response.message
+                        });
+                    } else {
+                        $('#modal-import').modal('hide');
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message
+                        });
+                        $('#form-import-data')[0].reset();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2500);
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        const errors = xhr.responseJSON.errors;
+
+                        $.each(errors, function(key, value) {
+                            let inputField = $('#' + key);
+                            let errorFeedback = $('#error-' + key);
+
+                            inputField.addClass('is-invalid'); // Tambahkan class is-invalid
+                            errorFeedback.text(value[0]).show(); // Tampilkan pesan error
+                        });
+
+                    } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: xhr.responseJSON.error
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: 'Kesalahan tidak terduga. Silakan coba lagi.'
+                        });
+                    }
+                }
+            });
+        });
+    });
     
     </script>
 @endsection

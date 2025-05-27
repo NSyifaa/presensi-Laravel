@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\KelasSiswaImport;
 use App\Models\JurusanModel;
 use App\Models\KelasJurusanModel;
 use App\Models\KelasSiswaModel;
@@ -11,6 +12,7 @@ use App\Models\SiswaModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KelasJurusanController extends Controller
 {
@@ -176,5 +178,20 @@ class KelasJurusanController extends Controller
         $fullPath = Storage::disk('local')->path($filePath);
         // dd($fullPath);
         return response()->download($fullPath, 'template_siswa_kls.xls');
+    }
+
+    public function import(Request $request, string $id)
+    {
+        // $request->validate([
+        //     'file' => 'required|mimes:xls,xlsx',
+        // ]);
+
+        Log::info('Importing file for Kelas ID: ' . $id);
+        
+        Excel::import(new KelasSiswaImport($id), $request->file('file'));
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data siswa telah berhasil diimport.'
+        ]);
     }
 }

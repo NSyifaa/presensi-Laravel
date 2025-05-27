@@ -52,6 +52,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::get('/kelas_jurusan/detail/{id}', [KelasJurusanController::class, 'detail'])->name('a.kelas.detail');
     Route::post('/kelas_jurusan/add/{id}', [KelasJurusanController::class, 'addSiswa'])->name('a.kelas.add.siswa');
     Route::get('/kelas_jurusan/download', [KelasJurusanController::class, 'download'])->name('a.kelas.download');
+    Route::post('/kelas_jurusan/import/{id}', [KelasJurusanController::class, 'import'])->name('a.kelas.import');
 
     Route::get('/guru', [GuruController::class, 'index'])->name('a.guru');
     Route::post('/guru/add', [GuruController::class, 'store'])->name('a.guru.add');
