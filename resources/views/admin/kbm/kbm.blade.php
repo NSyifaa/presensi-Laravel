@@ -40,7 +40,7 @@
                         </td>
                         <td>
                           <center>
-                            <button type="button" class="btn btn-primary btn-xs btn-presensi open-modal" data-url="{{ route('a.kbm.create') }}" id="btn-presensi">
+                            <button type="button" class="btn btn-primary btn-xs btn-presensi open-modal" data-url="{{ route('a.kbm.create', $item->id) }}" id="btn-presensi">
                                 <i class="nav-icon fas fa-qrcode"></i> Presensi
                             </button>    
                             <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" 
@@ -151,7 +151,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="modalShowLabel">Buat Presensi</h5>
+                    <h5 class="modal-title" id="modalShowLabel">Presensi</h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             GuruSeeder::class,
             KelasSiswaSeeder::class,
             KBMSeeder::class,
+            // PresensiSeeder::class,
         ]);
     }
 }

@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\GuruModel;
 use App\Models\KBMModel;
 use App\Models\KelasJurusanModel;
+use App\Models\LogPresensiModel;
 use App\Models\MapelModel;
 use App\Models\PeriodeModel;
+use App\Models\PresensiModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class KBMController extends Controller
 {
@@ -144,13 +147,64 @@ class KBMController extends Controller
         }
     }
 
-    public function create(Request $request)
+    public function create(Request $request, string $id)
     {
-    
-        $guru   = GuruModel::all();
-        $mapel  = MapelModel::all();
-        $kelas  = KelasJurusanModel::all();
+        $presensi = PresensiModel::where('id_kbm', $id)->get();
+        return view('admin.kbm._form', compact('presensi', 'id'));
+    }
 
-        return view('admin.kbm._form', compact( 'guru'));
+    public function store_presensi(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|string',
+        ]);
+
+        $pertemuanKe = $request->id;
+        // Jika user memilih pertemuan baru
+        if ($request->id === 'baru') {
+            $lastPertemuan = PresensiModel::where('id_kbm', $request->id_kbm)->count(); 
+            
+            $pertemuanKe = $lastPertemuan + 1;
+
+            // Simpan data presensi baru
+            $presensi = PresensiModel::create([
+                'pertemuan_ke' => $pertemuanKe,
+                'tanggal' => now(),
+                'id_kbm' => $request->id_kbm,
+                'ket' => 'A',
+                // tambahkan field lain jika perlu
+            ]);
+
+            $kbm = KBMModel::with('kelas.kelasSiswa')->findOrFail($request->id_kbm);
+            $siswaKelas = $kbm->kelas->kelasSiswa;
+
+            // Log::info($siswaKelas);
+            
+            $insertData = [];
+            foreach ($siswaKelas as $siswa) {
+                $insertData[] = [
+                    'id_presensi' => $presensi->id,
+                    'nis' => $siswa->nis,
+                    'status' => 'Alpa',
+                ];
+            }
+
+            LogPresensiModel::insert($insertData);
+
+            return response()->json([
+                'redirect_url' => route('a.kbm.presensi', $presensi->id)
+            ]);
+        }
+
+        return response()->json([
+            'redirect_url' => route('a.kbm.presensi', $request->id)
+        ]);
+    }
+
+    public function presensi(Request $request, string $id)
+    {
+        $presensi = PresensiModel::where('id_kbm', $id)->get();
+        return view('admin.kbm.presensi', compact('presensi', 'id'));
     }
 }
+ 

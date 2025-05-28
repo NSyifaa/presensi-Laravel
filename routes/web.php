@@ -65,7 +65,9 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/kbm/add', [KBMController::class, 'store'])->name('a.kbm.add');
     Route::post('/kbm/edit/{id}', [KBMController::class, 'update'])->name('a.kbm.edit');
     Route::delete('/kbm/delete/{id}', [KBMController::class, 'destroy'])->name('a.kbm.delete');
-    Route::get('/kbm/create/presensi', [KBMController::class, 'create'])->name('a.kbm.create');
+    Route::get('/kbm/create/presensi/{id}', [KBMController::class, 'create'])->name('a.kbm.create');
+    Route::post('/kbm/create/presensi', [KBMController::class, 'store_presensi'])->name('a.kbm.create.presensi');
+    Route::get('/kbm/presensi/{id}', [KBMController::class, 'presensi'])->name('a.kbm.presensi');
 });
 
 Route::group(['middleware' =>'auth:guru'],function () {
