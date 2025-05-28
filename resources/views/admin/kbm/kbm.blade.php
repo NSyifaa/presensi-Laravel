@@ -40,6 +40,9 @@
                         </td>
                         <td>
                           <center>
+                            <button type="button" class="btn btn-primary btn-xs btn-presensi open-modal" data-url="{{ route('a.kbm.create') }}" id="btn-presensi">
+                                <i class="nav-icon fas fa-qrcode"></i> Presensi
+                            </button>    
                             <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default" 
                             data-id="{{ $item->id }}"
                             data-guru= "{{ $item->guru->nip }}"
@@ -143,6 +146,26 @@
       <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <!-- Modal Dinamis -->
+    <div class="modal fade" id="modalShow" tabindex="-1" role="dialog" aria-labelledby="modalShowLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalShowLabel">Buat Presensi</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="mdLd" class="p-4 text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div>Loading content...</div>
+                </div>
+                <div class="modal-body" id="mdBd" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
 
     <script>
     $(document).ready(function() {
@@ -339,5 +362,27 @@
     });
     
     </script>
-    
+    <script>
+    $(document).on("click", ".open-modal", function () {
+        $("#mdBd").hide();
+        $("#mdLd").show();
+        $("#modalShow").modal({
+            backdrop: "static",
+            keyboard: false,
+        });
+        $("#modalShow").modal("show");
+
+        $("#mdBd").load($(this).data("url"), function (response, status, xhr) {
+            if (status === "success") {
+                setTimeout(function () {
+                    $("#mdBd").show();
+                    $("#mdLd").hide();
+                }, 200);
+            } else {
+                console.error("Gagal load konten modal:", xhr.statusText);
+                $("#mdLd").html('<div class="text-danger">Gagal memuat data.</div>');
+            }
+        });
+    });
+    </script>
 @endsection

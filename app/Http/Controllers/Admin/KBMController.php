@@ -143,4 +143,14 @@ class KBMController extends Controller
             ]);
         }
     }
+
+    public function create(Request $request)
+    {
+    
+        $guru   = GuruModel::all();
+        $mapel  = MapelModel::all();
+        $kelas  = KelasJurusanModel::all();
+
+        return view('admin.kbm._form', compact( 'guru'));
+    }
 }
