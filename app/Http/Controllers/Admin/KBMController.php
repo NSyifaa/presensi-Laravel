@@ -238,5 +238,14 @@ class KBMController extends Controller
             ]);
         }
     }
+
+    public function getLogPresensi($id)
+    {
+        $logPresensi = LogPresensiModel::with('siswa')->where('id_presensi', $id)->get();
+
+        $html = view('admin.kbm._table_log_presensi', compact('logPresensi'))->render();
+
+        return response()->json(['html' => $html]);
+    }
 }
  

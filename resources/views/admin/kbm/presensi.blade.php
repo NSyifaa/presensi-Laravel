@@ -42,13 +42,14 @@
                                 <tr>
                                     <td><b>Kelas</b> </td>
                                     <td>
-                                        {{ $kbm->kelas->nama_kelas }}
+                                        {{ $kbm->kelas->nama_kelas }} -
+                                        [ {{ $kbm->kelas->jurusan->nama_jurusan }} ]
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><b>Jurusan</b></td>
+                                    <td><b>Pertemuan Ke</b></td>
                                     <td>
-                                        {{ $kbm->kelas->jurusan->nama_jurusan }}
+                                        {{ $presensi->pertemuan_ke }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -74,42 +75,27 @@
 
                     </div>
                     <div class="col-lg-6">
-                        <h6><b>Total siswa = {{ $logPresensi->count() }}</b></h6>
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%;">No</th>
-                                    <th>Siswa</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($logPresensi as $item)
-                                <tr id="baris-presensi-{{ $item->id }}">
-                                    <td>{{ $loop->iteration; }}</td>
-                                    <td>
-                                        {{ $item->nis }} <br>
-                                        {{ $item->siswa->nama }}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#modal-default" 
-                                            data-id="{{ $item->id }}"
-                                            data-status="{{ $item->status }}">
-                                        @if ($item->status == 'Hadir')
-                                            <span id="badge-status-{{ $item->id }}" class="badge badge-{{ warnaStatus($item->status) }}"> Hadir <i class="nav-icon fas fa-chevron-down"></i> </span> 
-                                        @elseif ($item->status == 'Izin')
-                                            <span id="badge-status-{{ $item->id }}" class="badge badge-{{ warnaStatus($item->status) }}"> Izin <i class="nav-icon fas fa-chevron-down"></i> </span> 
-                                        @elseif ($item->status == 'Sakit')
-                                            <span id="badge-status-{{ $item->id }}" class="badge badge-{{ warnaStatus($item->status) }}"> Sakit <i class="nav-icon fas fa-chevron-down"></i> </span> 
-                                        @else
-                                            <span id="badge-status-{{ $item->id }}" class="badge badge-{{ warnaStatus($item->status) }}"> Alpa <i class="nav-icon fas fa-chevron-down"></i> </span> 
-                                        @endif
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                         <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="nav-icon fas fa-users"></i> Daftar Siswa</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="card-refresh"  id="refresh-log-presensi">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.card-tools -->
+                            </div>
+                            <div class="card-body">
+                                <h6><b>Total siswa = {{ $logPresensi->count() }}</b></h6>
+                                <div id="log-presensi-table">
+                                    @include('admin.kbm._table_log_presensi', ['logPresensi' => $logPresensi])
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -243,6 +229,24 @@
                   }
             });
 
+        });
+
+        $('[data-card-widget="card-refresh"]').on('click', function () {
+            const id = '{{ $id }}'; // pastikan variabel ini tersedia
+
+            $.ajax({
+                url: `/kbm/presensi/log/${id}`,
+                method: 'GET',
+                beforeSend: function () {
+                    $('#log-presensi-table').html('<div class="text-center py-3"><i class="fas fa-spinner fa-spin"></i> Memuat data...</div>');
+                },
+                success: function (res) {
+                    $('#log-presensi-table').html(res.html);
+                },
+                error: function () {
+                    $('#log-presensi-table').html('<div class="text-danger">Gagal memuat data presensi.</div>');
+                }
+            });
         });
     </script>
 
