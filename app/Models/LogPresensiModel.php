@@ -12,4 +12,13 @@ class LogPresensiModel extends Model
         'nis',
         'status',
     ];
+
+    public function presensi()
+    {
+        return $this->belongsTo(PresensiModel::class, 'id_presensi', 'id');
+    }
+    public function siswa()
+    {
+        return $this->belongsTo(SiswaModel::class, 'nis', 'nis');
+    }
 }

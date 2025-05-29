@@ -418,4 +418,36 @@ if (!function_exists('tanggalEn'))
 		return $get_tanggal.' '.$rpl_bulan.' '.$get_tahun;
 	}
 }
+
+if (!function_exists('formatTanggalIndonesia')) 
+{
+    function formatTanggalIndonesia($tanggal, $format = 'd F Y') 
+    {
+        try {
+            $carbonDate = \Carbon\Carbon::parse($tanggal);
+            \Carbon\Carbon::setLocale('id');
+            return $carbonDate->translatedFormat($format);
+        } catch (\Exception $e) {
+            return $tanggal; // fallback jika format tidak valid
+        }
+    }
+	// FORMAT TANGGAL	
+	// 'd F Y'	10 Mei 2025	Tanggal lengkap
+	// 'l, d F Y'	Sabtu, 10 Mei 2025	Hari + tanggal
+	// 'd/m/Y'	10/05/2025	Format angka biasa
+	// 'd F Y H:i'	10 Mei 2025 14:30	Tanggal + waktu
+}
+
+if (!function_exists('warnaStatus')) {
+    function warnaStatus($status)
+    {
+        return match ($status) {
+            'Hadir' => 'success',
+            'Izin' => 'warning',
+            'Sakit' => 'info',
+            'Alpa' => 'danger',
+            default => 'secondary',
+        };
+    }
+}
 ?>

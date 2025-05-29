@@ -201,10 +201,42 @@ class KBMController extends Controller
         ]);
     }
 
-    public function presensi(Request $request, string $id)
+    public function presensi( string $id)
     {
-        $presensi = PresensiModel::where('id_kbm', $id)->get();
-        return view('admin.kbm.presensi', compact('presensi', 'id'));
+        $presensi = PresensiModel::findOrFail($id);
+        Log::info($presensi);
+        
+        $kbm = KBMModel::with('kelas.jurusan', 'tahunAjaran', 'mapel', 'guru')->findOrFail($presensi->id_kbm);
+        $logPresensi = LogPresensiModel::where('id_presensi', $id)
+        ->with('siswa')
+        ->get();
+        
+        return view('admin.kbm.presensi', compact('presensi', 'id', 'kbm', 'logPresensi'));
+    }
+
+    public function update_presensi(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:log_presensi,id',
+            'status' => 'required|in:Hadir,Alpa,Izin,Sakit',
+        ]);
+
+        $logPresensi = LogPresensiModel::where('id', $request->id)->first();
+        if ($logPresensi) {
+            $logPresensi->update(['status' => $request->status]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Status presensi berhasil diperbarui.',
+                'id' => $request->id,
+                'status_presensi' => $request->status,
+                'badge_class' => 'badge-' . warnaStatus($request->status),
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Data presensi tidak ditemukan.'
+            ]);
+        }
     }
 }
  
