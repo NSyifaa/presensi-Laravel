@@ -247,5 +247,27 @@ class KBMController extends Controller
 
         return response()->json(['html' => $html]);
     }
+
+    public function tutupPresensi($id)
+    {
+        $presensi = PresensiModel::findOrFail($id);
+        $presensi->update(['ket' => 'T']);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Presensi telah ditutup.',
+        ]);
+    }
+
+    public function aktifkanPresensi($id)
+    {
+        $presensi = PresensiModel::findOrFail($id);
+        $presensi->update(['ket' => 'A']);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Presensi telah diaktifkan.',
+        ]);
+    }
 }
  

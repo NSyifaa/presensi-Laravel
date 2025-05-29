@@ -70,6 +70,8 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::get('/kbm/presensi/{id}', [KBMController::class, 'presensi'])->name('a.kbm.presensi');
     Route::post('/kbm/presensi/update', [KBMController::class, 'update_presensi'])->name('a.kbm.presensi.update');
     Route::get('/kbm/presensi/log/{id}', [KBMController::class, 'getLogPresensi'])->name('a.kbm.presensi.log');
+    Route::post('/kbm/presensi/tutup/{id}', [KBMController::class, 'tutupPresensi'])->name('a.kbm.presensi.tutup');
+    Route::post('/kbm/presensi/aktifkan/{id}', [KBMController::class, 'aktifkanPresensi'])->name('a.kbm.presensi.aktifkan');
 
 });
 

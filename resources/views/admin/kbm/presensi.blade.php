@@ -69,10 +69,58 @@
                         <br>
                         <p class="text-center">Scan QR Code di bawah ini untuk melakukan presensi</p>
                         <div class="text-center">
-                            
+                            <center>
+                                {!! DNS2D::getBarcodeHTML( strval($presensi->id) , 'QRCODE') !!}
+                            </center>
+
+                            @if ($presensi->ket == 'A')
+                                <div class="text-center mt-4">
+                                    <span class="badge badge-success">Presensi Aktif</span>
+                                    <p>
+                                        <b>Waktu : </b> <span id="countDown"></span> Menit
+                                    </p> 
+                                    <button type="button" class="btn btn-xs btn-danger" onclick="tutupPresensi()">Tutup Presensi</button>
+                                </div>
+                                <script>
+                                    var waktu = 600; // 10 menit = 600 detik
+
+                                    var timer = setInterval(function() {
+                                        var menit = Math.floor(waktu / 60);
+                                        var detik = waktu % 60;
+                                        document.getElementById('countDown').innerHTML = (menit < 10 ? '0' : '') + menit + ':' + (detik < 10 ? '0' : '') + detik;
+
+                                        waktu--;
+
+                                        if (waktu < 0) {
+                                            clearInterval(timer);
+                                            tutupPresensiAjax();
+                                        }
+                                    }, 1000);
+
+                                    function tutupPresensi() {
+                                        Swal.fire({
+                                            title: 'Tutup Presensi',
+                                            text: "Apakah Anda yakin ingin menutup presensi ini?",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Ya, tutup presensi!'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                tutupPresensiAjax();
+                                            }
+                                        });
+                                    }   
+                                </script>
+                            @else
+                                <div class="text-center mt-4">
+                                    <span class="badge badge-danger">Presensi Tidak Aktif</span> <br>
+                                    <button type="button" class="btn btn-xs btn-success" onclick="aktifkan()">Aktifkan</button>
+                                </div>
+                            @endif
                         </div>
                         <br>
-
                     </div>
                     <div class="col-lg-6">
                          <div class="card">
@@ -248,6 +296,98 @@
                 }
             });
         });
-    </script>
 
+        
+    </script>
+    <script>
+        function tutupPresensiAjax() {
+            $.ajax({
+                url: "{{ route('a.kbm.presensi.tutup', $presensi->id) }}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    location.reload();
+                },
+                error: function(xhr) {
+                      if (xhr.responseJSON && xhr.responseJSON.errors) {
+                          const errors = xhr.responseJSON.errors;
+
+                          $.each(errors, function(key, value) {
+                              let inputField = $('#' + key);
+                              let errorFeedback = $('#error-' + key);
+
+                              inputField.addClass('is-invalid'); // Tambahkan class is-invalid
+                              errorFeedback.text(value[0]).show(); // Tampilkan pesan error
+                          });
+
+                      } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Gagal!',
+                              text: xhr.responseJSON.error
+                          });
+                      } else {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Gagal!',
+                              text: 'Kesalahan tidak terduga. Silakan coba lagi.'
+                          });
+                      }
+                  }
+            });
+        }
+
+        function aktifkan() {
+                 Swal.fire({
+                    title: 'Tutup Presensi',
+                    text: "Apakah Anda yakin ingin mengaktifkan presensi ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Aktifkan presensi!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                         $.ajax({
+                            url: "{{ route('a.kbm.presensi.aktifkan', $presensi->id) }}",
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (response) {
+                                location.reload();
+                            },
+                            error: function(xhr) {
+                                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                    const errors = xhr.responseJSON.errors;
+
+                                    $.each(errors, function(key, value) {
+                                        let inputField = $('#' + key);
+                                        let errorFeedback = $('#error-' + key);
+
+                                        inputField.addClass('is-invalid'); // Tambahkan class is-invalid
+                                        errorFeedback.text(value[0]).show(); // Tampilkan pesan error
+                                    });
+
+                                } else if (xhr.responseJSON && xhr.responseJSON.error) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal!',
+                                        text: xhr.responseJSON.error
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal!',
+                                        text: 'Kesalahan tidak terduga. Silakan coba lagi.'
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+    </script>
 @endsection
