@@ -49,7 +49,7 @@
             'icon' => 'fas fa-chalkboard-teacher'
         ],
         [
-            'name' => 'Presensi',
+            'name' => 'Laporan Presensi',
             'route' => '#',
             'routeName' => '',
             'icon' => 'fas fa-clipboard-check'
@@ -62,6 +62,49 @@
         ],
        
     ];
+
+    $menuGuru = [
+        [
+            'name' => 'Dashboard',
+            'route' => '/guru/dashboard',
+            'routeName' => 'dashboard',
+            'icon' => 'fas fa-tachometer-alt'
+        ],
+        [
+            'name' => 'Presensi',
+            'route' => '/guru/presensi',
+            'routeName' => 'presensi',
+            'icon' => 'fas fa-clipboard-check'
+        ],
+        [
+            'name' => 'Keluar',
+            'route' => '/logout',   
+            'routeName' => '',
+            'icon' => 'fas fa-sign-out-alt'
+        ],
+    ];
+
+    $menuSiswa = [
+        [
+            'name' => 'Dashboard',
+            'route' => '/siswa/dashboard',
+            'routeName' => 'dashboard',
+            'icon' => 'fas fa-tachometer-alt'
+        ],
+        [
+            'name' => 'Presensi',
+            'route' => '/siswa/presensi',
+            'routeName' => 'presensi',
+            'icon' => 'fas fa-clipboard-check'
+        ],
+        [
+            'name' => 'Keluar',
+            'route' => '/logout',   
+            'routeName' => '',
+            'icon' => 'fas fa-sign-out-alt'
+        ],
+    ];
+    
 @endphp
 <div class="sidebar">
     <!-- Sidebar Menu -->
@@ -69,8 +112,9 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-       
-           @foreach ($menus as $menu)
+        
+            @if(Auth::user()->role == 'siswa')
+             @foreach ($menuSiswa as $menu)
                 <li class="nav-item">
                     <a href="{{ $menu['route'] }}" class="nav-link {{ request()->is(ltrim($menu['route'], '/') . '*') ? 'active' : '' }}">
                         <i class="nav-icon {{ $menu['icon'] }}"></i>
@@ -80,6 +124,31 @@
                     </a>
                 </li>
             @endforeach
+            @elseif (Auth::user()->role == 'guru')
+             @foreach ($menuGuru as $menu)
+                <li class="nav-item">
+                    <a href="{{ $menu['route'] }}" class="nav-link {{ request()->is(ltrim($menu['route'], '/') . '*') ? 'active' : '' }}">
+                        <i class="nav-icon {{ $menu['icon'] }}"></i>
+                        <p>
+                            {{ $menu['name'] }}
+                        </p>
+                    </a>
+                </li>
+            @endforeach
+            @else
+             @foreach ($menus as $menu)
+                <li class="nav-item">
+                    <a href="{{ $menu['route'] }}" class="nav-link {{ request()->is(ltrim($menu['route'], '/') . '*') ? 'active' : '' }}">
+                        <i class="nav-icon {{ $menu['icon'] }}"></i>
+                        <p>
+                            {{ $menu['name'] }}
+                        </p>
+                    </a>
+                </li>
+            @endforeach
+            @endif
+
+           
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

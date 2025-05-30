@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\PeriodeController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Guru\GuruDashController;
+use App\Http\Controllers\Siswa\PresensiController;
 use App\Http\Controllers\Siswa\SiswaDashController;
 use Illuminate\Support\Facades\Route;
 
@@ -81,5 +82,7 @@ Route::group(['middleware' =>'auth:guru'],function () {
 
 Route::group(['middleware' =>'auth:siswa'],function () {
     Route::get('/siswa/dashboard', [SiswaDashController::class, 'index'])->name('s.dashboard');
+    Route::get('/siswa/presensi', [PresensiController::class, 'index'])->name('s.presensi');
+    Route::post('/siswa/presensi/{id}', [PresensiController::class, 'presensi'])->name('s.presensi.store');
 });
 
