@@ -79,6 +79,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::get('/presensi', [APresensiController::class, 'index'])->name('a.presensi');
     Route::get('/presensi/kbm/{id}', [APresensiController::class, 'kbm'])->name('a.presensi.kbm');
     Route::get('/presensi/kbm/create/{id}', [APresensiController::class, 'create'])->name('a.presensi.kbm.create');
+    Route::get('/presensi/kbm/pdf/{id}', [APresensiController::class, 'pdf'])->name('a.presensi.kbm.pdf');
 
 });
 

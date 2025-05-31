@@ -82,6 +82,6 @@
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-info"><i class="fas fa-file"></i> Export PDF</button>
+        <a href="{{ route('a.presensi.kbm.pdf', $kbm->id) }}" target="_blank" class="btn btn-info"><i class="fas fa-file"></i> Export PDF</a>
     </div>
 <script>

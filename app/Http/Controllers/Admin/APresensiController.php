@@ -10,6 +10,7 @@ use App\Models\PeriodeModel;
 use App\Models\PresensiModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Mpdf\Mpdf;
 
 class APresensiController extends Controller
 {
@@ -34,7 +35,7 @@ class APresensiController extends Controller
         
         return view('admin.presensi.kbm', compact('kelas', 'kbm'));
     }
-    public function create(Request $request, string $id)
+    public function create(string $id)
     {
         $kbm = KBMModel::with('mapel', 'guru', 'kelas')
             ->where('id', $id)
@@ -43,9 +44,54 @@ class APresensiController extends Controller
         $presensi = PresensiModel::with('logPresensi.siswa')
         ->where('id_kbm', $id)->get();
 
-        Log::info($presensi);
+        // Log::info($presensi);
         
         return view('admin.presensi._form', compact('presensi', 'kbm'));
+    }
+
+    public function pdf(string $id)
+    {
+        $kbm = KBMModel::with('mapel', 'guru', 'kelas')
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $presensi = PresensiModel::with('logPresensi.siswa')
+        ->where('id_kbm', $id)->get();
+
+        // Susun data seperti di modal, bisa diparsing langsung ke view blade PDF
+        $pertemuan = $presensi->count();
+
+        $daftarSiswa = collect();
+        foreach ($presensi as $p) {
+            foreach ($p->logPresensi as $log) {
+                $daftarSiswa->put($log->siswa->nis, $log->siswa);
+            }
+        }
+
+        $dataPresensi = [];
+        foreach ($presensi as $p) {
+            foreach ($p->logPresensi as $log) {
+                $dataPresensi[$log->siswa->nis][$p->pertemuan_ke] = $log->status;
+            }
+        }
+
+         $data = [
+            'kbm' => $kbm,
+            'presensi' => $presensi,
+            'pertemuan' => $pertemuan,
+            'daftarSiswa' => $daftarSiswa,
+            'dataPresensi' => $dataPresensi,
+        ];
+
+        // Render view ke HTML
+        $html = view('admin.presensi._pdf', $data)->render();
+
+        // Generate PDF
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($html);
+
+        // Output ke browser langsung, dengan nama file dinamis
+        return $mpdf->Output("Presensi_{$kbm->mapel->nama_mapel}_{$kbm->kelas->nama_kelas}.pdf", 'I');
     }
 
 }
