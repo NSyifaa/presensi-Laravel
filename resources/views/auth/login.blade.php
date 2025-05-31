@@ -3,11 +3,11 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Sisfo Presensi Mahasiswa | Univ Peradaban</title>
+    <title>Sistem Presensi Siswa | SMK Ma'arif NU Tonjong</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="{{ asset('auth/styles/app.min.css') }}"/>
-    <link rel="shortcut icon" href="../img/logoperadaban.png">
+    <link rel="shortcut icon" href="../img/LogoMaarif.jpeg">
 
   </head>
 
@@ -24,22 +24,22 @@
         <div class="session-carousel slide" data-ride="carousel" data-interval="3000">
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
-            <div class="item active" style="background-image:url(../img/upb.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 50%;">
+            <div class="item active" style="background-image:url(../img/smktonjong.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 50%;">
             </div>
-            <div class="item" style="background-image:url(../img/upb1.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 50%;">
+            <div class="item" style="background-image:url(../img/smk.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 50%;">
             </div>
-            <div class="item" style="background-image:url(../img/upb2.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 50%;">
+            <div class="item" style="background-image:url(../img/smktonjong.jpg);background-size:cover;background-repeat: no-repeat;background-position: 50% 50%;">
             </div>
           </div>
         </div>
         <div class="card bg-white  blue no-border" style="background-color:#ffffff;">
-          <div class="card-block">
+          <div class="card-body mb-4">
             <form role="form" class="form-layout" action="{{ route('verify') }}" method="post">
               @csrf
-              <div class="text-center">    
-                <img src="../img/logo-peradaban.png?>" style='width:300px; height:100px;'/> 
+              <div class="text-center mt-5">    
+                <img src="../img/LogoMaarif.jpeg"> 
                 <h4 class="text-uppercase"><b><font color="#000000">SISTEM PRESENSI SISWA</font></b></h4>
-                <h4 class="text-uppercase"><font color="#000000">UNIVERSITAS PERADABAN</font></h4>
+                <h4 class="text-uppercase"><font color="#000000">SMK Ma'arif NU Tonjong</font></h4>
               </div>
               <div class="form-inputs p-b">
                 <label class="text-uppercase"><font color="#000000">Username</font></label>
@@ -48,9 +48,9 @@
                 <input type="password" class="form-control input-lg" name="password" id="password"  placeholder="input password" required>
               </div>
                 
-              <button class="btn btn-warning btn-block btn-lg" type="submit" name= "login" style="background-color:#86090f;"><font color="#ffffff"><img src="../img/personkey-white.png">&nbsp<b>Login</b></font></button>
+              <button class="btn btn-success btn-block btn-lg" type="submit" name= "login" style="background-color:#0f8c2f;"><font color="#ffffff"><img src="../img/personkey-white.png">&nbsp<b>Login</b></font></button>
           
-              <center><font color="#000000"><small><em> Copyright &copy; SMK MA'ARIF NU 01 TONJONG </a></em></</small></font>
+              <center><font color="#000000"><small><em> Copyright &copy; SMK MA'ARIF NU TONJONG </a></em></</small></font>
             <br/>  
             <font color="#000000"><?php echo date("Y"); ?></</small></font>
               </center>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\PeriodeController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Guru\GKBMController;
 use App\Http\Controllers\Guru\GuruDashController;
 use App\Http\Controllers\Siswa\PresensiController;
 use App\Http\Controllers\Siswa\SiswaDashController;
@@ -78,6 +79,8 @@ Route::group(['middleware' =>'auth:admin'],function () {
 
 Route::group(['middleware' =>'auth:guru'],function () {
     Route::get('/guru/dashboard', [GuruDashController::class, 'index'])->name('g.dashboard');
+
+    Route::get('/guru/kbm', [GKBMController::class, 'index'])->name('g.kbm');
 });
 
 Route::group(['middleware' =>'auth:siswa'],function () {

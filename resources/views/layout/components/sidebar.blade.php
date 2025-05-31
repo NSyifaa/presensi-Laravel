@@ -71,6 +71,12 @@
             'icon' => 'fas fa-tachometer-alt'
         ],
         [
+            'name' => 'KBM',
+            'route' => '/guru/kbm',
+            'routeName' => 'kbm',
+            'icon' => 'fas fa-chalkboard-teacher'
+        ],
+        [
             'name' => 'Presensi',
             'route' => '/guru/presensi',
             'routeName' => 'presensi',
