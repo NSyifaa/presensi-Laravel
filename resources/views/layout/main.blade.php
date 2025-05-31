@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sistem Presensi | SMK Ma'arif NU Tonjong</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="shortcut icon" href="../img/LogoMaarif.jpeg">
+  <link rel="shortcut icon" href="{{ asset('/img/LogoMaarif.jpeg') }}">
 
   @include('layout.components.css')
 </head>
