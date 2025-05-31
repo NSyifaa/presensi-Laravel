@@ -50,8 +50,8 @@
         ],
         [
             'name' => 'Laporan Presensi',
-            'route' => '#',
-            'routeName' => '',
+            'route' => '/presensi',
+            'routeName' => 'presensi',
             'icon' => 'fas fa-clipboard-check'
         ],
         [
@@ -71,16 +71,16 @@
             'icon' => 'fas fa-tachometer-alt'
         ],
         [
-            'name' => 'KBM',
+            'name' => 'Presensi',
             'route' => '/guru/kbm',
             'routeName' => 'kbm',
-            'icon' => 'fas fa-chalkboard-teacher'
+            'icon' => 'fas fa-clipboard-check'
         ],
         [
-            'name' => 'Presensi',
+            'name' => 'Laporan Presensi',
             'route' => '/guru/presensi',
             'routeName' => 'presensi',
-            'icon' => 'fas fa-clipboard-check'
+            'icon' => 'fas fa-clipboard'
         ],
         [
             'name' => 'Keluar',

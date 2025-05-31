@@ -35,4 +35,8 @@ class KBMModel extends Model
     {
         return $this->belongsTo(PeriodeModel::class, 'id_ta', 'id');
     }
+    public function presensi()
+    {
+        return $this->hasMany(PresensiModel::class, 'id_kbm', 'id');
+    }
 }

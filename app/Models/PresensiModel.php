@@ -21,5 +21,9 @@ class PresensiModel extends Model
     {
         return $this->belongsTo(KBMModel::class, 'id_kbm', 'id');
     }
+    public function logPresensi()
+    {
+        return $this->hasMany(LogPresensiModel::class, 'id_presensi', 'id');
+    }
 }
  

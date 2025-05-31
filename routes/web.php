@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashController;
+use App\Http\Controllers\Admin\APresensiController;
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\KBMController;
@@ -74,6 +75,10 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::get('/kbm/presensi/log/{id}', [KBMController::class, 'getLogPresensi'])->name('a.kbm.presensi.log');
     Route::post('/kbm/presensi/tutup/{id}', [KBMController::class, 'tutupPresensi'])->name('a.kbm.presensi.tutup');
     Route::post('/kbm/presensi/aktifkan/{id}', [KBMController::class, 'aktifkanPresensi'])->name('a.kbm.presensi.aktifkan');
+
+    Route::get('/presensi', [APresensiController::class, 'index'])->name('a.presensi');
+    Route::get('/presensi/kbm/{id}', [APresensiController::class, 'kbm'])->name('a.presensi.kbm');
+    Route::get('/presensi/kbm/create/{id}', [APresensiController::class, 'create'])->name('a.presensi.kbm.create');
 
 });
 

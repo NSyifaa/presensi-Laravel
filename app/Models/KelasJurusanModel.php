@@ -21,7 +21,7 @@ class KelasJurusanModel extends Model
     {
         return $this->belongsTo(JurusanModel::class, 'kode_jurusan', 'kode_jurusan');
     }
-    public function periode()
+    public function tahunAjaran()
     {
         return $this->belongsTo(PeriodeModel::class, 'id_ta', 'id');
     }
@@ -34,5 +34,9 @@ class KelasJurusanModel extends Model
         return $this->hasMany(KelasSiswaModel::class, 'id_kls_jurusan', 'id');
     }
 
-    
+    public function kbm()
+    {
+        return $this->hasMany(KBMModel::class, 'id_kls_jurusan', 'id');
+    }
+
 }
