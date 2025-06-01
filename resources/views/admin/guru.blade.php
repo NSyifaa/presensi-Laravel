@@ -49,8 +49,10 @@
                                 </button>
                                 <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->nip }}" id="btn-hapus">
                                     <i class="nav-icon fas fa-trash"></i> Hapus
+                                </button>                                    
+                                <button type="button" class="btn btn-warning btn-xs btn-reset" data-id="{{ $item->nip }}" id="btn-reset">
+                                    <i class="nav-icon fas fa-sync"></i> Reset Password
                                 </button>                              
-
                             </center>
                             </td>
                         </tr>
@@ -421,6 +423,55 @@
                     }
                 });
             });
+
+            $('.btn-reset').on('click', function (e) {
+                var button = $(this);
+                var nip = button.data('id');
+                var url = "{{ route('a.guru.reset_pw', ':id') }}".replace(':id', nip);
+                var method = 'POST';
+
+                Swal.fire({
+                    title: "Reset Password",
+                    text: "Apakah Anda yakin ingin reset password guru ini?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya, Reset!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: method,
+                            url: url,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            beforeSend: function() {
+                                button.attr('disabled', 'disabled');
+                                button.html('<i class="fa fa-spinner fa-spin mr-1"></i> Mereset...');
+                            },
+                            complete: function() {
+                                button.removeAttr('disabled');
+                                button.html('<i class="nav-icon fas fa-sync"></i> Reset Password');
+                            },
+                            success: function(response) {
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: response.message
+                                });
+                            },
+                            error: function(xhr) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: xhr.responseJSON?.error || 'Terjadi kesalahan tak terduga.'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
         });
         
     </script>

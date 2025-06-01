@@ -22,7 +22,7 @@ class KelasJurusanController extends Controller
     public function index()
     {
         $taAktif = PeriodeModel::where('status', 'A')->first();
-        $kelas = KelasJurusanModel::with(['jurusan', 'kelas', 'periode', 'kelasSiswa'])
+        $kelas = KelasJurusanModel::with(['jurusan', 'kelas', 'tahunAjaran', 'kelasSiswa'])
             ->where('id_ta', $taAktif->id)
             ->get();
         $jurusan = JurusanModel::all();
@@ -126,7 +126,7 @@ class KelasJurusanController extends Controller
     public function detail(string $id)
     {
         $taAktif = PeriodeModel::where('status', 'A')->first();
-        $kelas = KelasJurusanModel::with(['jurusan', 'kelas', 'periode'])
+        $kelas = KelasJurusanModel::with(['jurusan', 'kelas', 'tahunAjaran'])
             ->where('id', $id)
             ->first();
 

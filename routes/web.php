@@ -51,6 +51,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/siswa/import', [SiswaController::class, 'import'])->name('a.siswa.import');
     Route::get('/siswa/download', [SiswaController::class, 'download'])->name('a.siswa.download');
     Route::get('/siswa/export', [SiswaController::class, 'export'])->name('a.siswa.export');
+    Route::post('/siswa/reset_pw/{nis}', [SiswaController::class, 'resetPassword'])->name('a.siswa.reset_pw');
 
     Route::get('/kelas_jurusan', [KelasJurusanController::class, 'index'])->name('a.kelas');
     Route::post('/kelas_jurusan/add', [KelasJurusanController::class, 'store'])->name('a.kelas.add');
@@ -67,6 +68,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::delete('/guru/delete/{id}', [GuruController::class, 'destroy'])->name('a.guru.delete');
     Route::post('/guru/import', [GuruController::class, 'import'])->name('a.guru.import');
     Route::get('/guru/download', [GuruController::class, 'download'])->name('a.guru.download');
+    Route::post('/guru/reset_pw/{nip}', [GuruController::class, 'resetPassword'])->name('a.guru.reset_pw');
 
     Route::get('/kbm', [KBMController::class, 'index'])->name('a.kbm');
     Route::post('/kbm/add', [KBMController::class, 'store'])->name('a.kbm.add');

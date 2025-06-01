@@ -139,4 +139,21 @@ class GuruController extends Controller
             'message' => 'Data guru telah berhasil diimport.'
         ]);
     }
+
+    public function resetPassword($nip)
+    {
+        $guru = User::where('username', $nip)->first();
+
+        if (!$guru) {
+            return response()->json(['error' => 'Data guru tidak ditemukan.'], 404);
+        }
+
+        $guru->password = bcrypt($nip); 
+        $guru->save();
+
+        return response()->json([
+                'status' => 'success',
+                'message' => 'Password berhasil direset ke default (NIP).',
+        ]);
+    }
 }

@@ -152,4 +152,21 @@ class SiswaController extends Controller
     {
         return Excel::download(new SiswaExport, 'data_siswa.xlsx');
     }
+
+    public function resetPassword($nis)
+    {
+        $user = User::where('username', $nis)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'Data user tidak ditemukan.'], 404);
+        }
+
+        $user->password = bcrypt($nis); 
+        $user->save();
+
+        return response()->json([
+                'status' => 'success',
+                'message' => 'Password berhasil direset ke default (NIS).',
+        ]);
+    }
 }

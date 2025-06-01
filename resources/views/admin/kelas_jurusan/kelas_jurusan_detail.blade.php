@@ -12,7 +12,7 @@
                             <tbody>
                                 <tr>
                                     <td><b>Tahun Akademik</b></td>
-                                    <td>{{ $kelas->periode->tahun}} - {{ $kelas->periode->semester == 1 ? 'Ganjil' : 'Genap'}}</td>
+                                    <td>{{ $kelas->tahunAjaran->tahun}} - {{ $kelas->tahunAjaran->semester == 1 ? 'Ganjil' : 'Genap'}}</td>
                                 </tr>
                                 <tr>
                                     <td><b>Nama Kelas</b></td>
