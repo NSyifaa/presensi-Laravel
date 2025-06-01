@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\PeriodeController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GPresensiController;
 use App\Http\Controllers\Guru\GKBMController;
 use App\Http\Controllers\Guru\GuruDashController;
 use App\Http\Controllers\Siswa\PresensiController;
@@ -101,6 +102,10 @@ Route::group(['middleware' =>'auth:guru'],function () {
     Route::post('/guru/kbm/presensi/tutup/{id}', [KBMController::class, 'tutupPresensi'])->name('g.kbm.presensi.tutup');
     Route::post('/guru/kbm/presensi/aktifkan/{id}', [KBMController::class, 'aktifkanPresensi'])->name('g.kbm.presensi.aktifkan');
 
+    Route::get('/guru/presensi', [GPresensiController::class, 'index'])->name('g.presensi');
+    Route::get('/guru/presensi/kbm/{id}', [GPresensiController::class, 'kbm'])->name('g.presensi.kbm');
+    Route::get('/guru/presensi/kbm/create/{id}', [GPresensiController::class, 'create'])->name('g.presensi.kbm.create');
+    Route::get('/guru/presensi/kbm/pdf/{id}', [GPresensiController::class, 'pdf'])->name('g.presensi.kbm.pdf');
 });
 
 Route::group(['middleware' =>'auth:siswa'],function () {
