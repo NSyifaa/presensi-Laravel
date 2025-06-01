@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AuthController::class, 'index'])->middleware('guest')->name('login');
 Route::post('/', [AuthController::class, 'verify'])->name('verify');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::middleware(['auth:admin,guru,siswa'])->group(function () {
+    Route::get('/ganti_password', [AuthController::class, 'ganti_password'])->name('password');
+    Route::post('/ganti_password/{id}', [AuthController::class, 'update_password'])->name('password.update');
+});
 
 Route::group(['middleware' =>'auth:admin'],function () {
     Route::get('/dashboard', [AdminDashController::class, 'index'])->name('a.dashboard');

@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="{{ asset('auth/styles/app.min.css') }}"/>
     <link rel="shortcut icon" href="../img/LogoMaarif.jpeg">
+ <!-- SweetAlert2 -->
+   <link rel="stylesheet" href="{{ asset('template/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+   <!-- Toastr -->
+   <link rel="stylesheet" href="{{ asset('template/plugins/toastr/toastr.min.css') }}">
 
   </head>
 
@@ -65,5 +69,36 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="{{ asset("auth/scripts/app.min.js") }}"></script>
   </body>
+      <!-- AdminLTE App -->
+    <script src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{ asset('template/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('template/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('template/plugins/toastr/toastr.min.js') }}"></script>
+    <script>
+      var Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000
+        });
+    </script>
+  @if (session('loginError'))
+  <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Login Gagal',
+        text: '{{ session('loginError') }}',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'OK'
+    });
+  </script>
+  @endif
+
 
 </html>

@@ -55,6 +55,12 @@
             'icon' => 'fas fa-clipboard-check'
         ],
         [
+            'name' => 'Ganti Password',
+            'route' => '/ganti_password',
+            'routeName' => 'ganti_password',
+            'icon' => 'fas fa-key'
+        ],
+        [
             'name' => 'Keluar',
             'route' => '/logout',   
             'routeName' => '',
@@ -83,6 +89,12 @@
             'icon' => 'fas fa-clipboard'
         ],
         [
+            'name' => 'Ganti Password',
+            'route' => '/ganti_password',
+            'routeName' => 'ganti_password',
+            'icon' => 'fas fa-key'
+        ],
+        [
             'name' => 'Keluar',
             'route' => '/logout',   
             'routeName' => '',
@@ -102,6 +114,12 @@
             'route' => '/siswa/presensi',
             'routeName' => 'presensi',
             'icon' => 'fas fa-clipboard-check'
+        ],
+        [
+            'name' => 'Ganti Password',
+            'route' => '/ganti_password',
+            'routeName' => 'ganti_password',
+            'icon' => 'fas fa-key'
         ],
         [
             'name' => 'Keluar',

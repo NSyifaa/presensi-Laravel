@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserAuthVerifyRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +27,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->route('s.dashboard');
         } else {
-            return redirect()->back()->withErrors(['username' => 'Invalid credentials']);
+            return redirect()->back()->with('loginError', 'Username atau password salah.');
         }
     }
     
@@ -40,6 +41,28 @@ class AuthController extends Controller
             Auth::guard('siswa')->logout();
         }
         return redirect()->route('login');
+        
+    }
+    public function ganti_password()
+    {
+        $user = Auth::user();
+        return view('auth.pw', compact('user'));
+    }
+    public function update_password(Request $request, string $id)
+    {
+        $request->validate([
+            'new_password' => 'required',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+        
+        $user = User::findOrFail($id);
+        $user->password = bcrypt($request->input('new_password'));
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Password berhasil diubah',
+        ]);
         
     }
 }
