@@ -43,10 +43,6 @@
                     // Pause kamera QR
                     html5QrcodeScanner.clear();
                 },
-                complete: function() {
-                    $('#loading-overlay').remove();
-                    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-                },
                 success: function(response) {
                     $('#loading-overlay').remove();
                      if (response.status === 'warning') {
@@ -60,13 +56,9 @@
                             icon: 'success',
                             title: response.message
                         });
-                        $('#form-tambah-data')[0].reset();
-                        setTimeout(function() {
-                            location.reload();
-                        }, 2500);
                     }
 
-                    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+                    // html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
                 },
                 error: function(xhr) {
@@ -85,7 +77,11 @@
                     }
                     
                     alert(errorMessage);
-                }
+                },
+                complete: function() {
+                    $('#loading-overlay').remove();
+                    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+                },
             });
         }
 

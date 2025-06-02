@@ -283,7 +283,7 @@
             const id = '{{ $id }}'; // pastikan variabel ini tersedia
 
             $.ajax({
-                url: `/kbm/presensi/log/${id}`,
+                url: `/guru/kbm/presensi/log/${id}`,
                 method: 'GET',
                 beforeSend: function () {
                     $('#log-presensi-table').html('<div class="text-center py-3"><i class="fas fa-spinner fa-spin"></i> Memuat data...</div>');
