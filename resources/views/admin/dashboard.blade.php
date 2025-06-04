@@ -53,7 +53,7 @@
                         <!-- Jadwal KBM Hari Ini -->
                         <div class="card shadow border-0 mt-4">
                             <div class="card-header bg-light">
-                                <h5 class="mb-0"><i class="fas fa-calendar-day"></i> KBM Aktif Hari Ini</h5>
+                                <h5 class="mb-0"><i class="fas fa-calendar-day"></i> KBM Aktif Hari Ini - ({{ hariNum($hariIniAngka) }})</h5>
                             </div>
                             <div class="card-body p-0">
                                 @if(count($kbmHariIni) > 0)

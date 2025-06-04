@@ -32,7 +32,7 @@ class AdminDashController extends Controller
         $guru = GuruModel::all();
         $kelas = KelasModel::all();
 
-        return view('admin.dashboard', compact('kbmHariIni', 'siswa', 'guru', 'kelas'));
+        return view('admin.dashboard', compact('kbmHariIni', 'siswa', 'guru', 'kelas', 'hariIniAngka'));
     }
 
 }
