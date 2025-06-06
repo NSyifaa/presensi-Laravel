@@ -72,6 +72,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
     Route::post('/guru/reset_pw/{nip}', [GuruController::class, 'resetPassword'])->name('a.guru.reset_pw');
 
     Route::get('/kbm', [KBMController::class, 'index'])->name('a.kbm');
+    Route::get('/kbm/detail/{id}', [KBMController::class, 'detail'])->name('a.kbm.detail');
     Route::post('/kbm/add', [KBMController::class, 'store'])->name('a.kbm.add');
     Route::post('/kbm/edit/{id}', [KBMController::class, 'update'])->name('a.kbm.edit');
     Route::delete('/kbm/delete/{id}', [KBMController::class, 'destroy'])->name('a.kbm.delete');

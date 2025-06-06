@@ -66,5 +66,6 @@
 <!-- ./wrapper -->
 
 @include('layout.components.js')
+@stack('scripts')
 </body>
 </html>

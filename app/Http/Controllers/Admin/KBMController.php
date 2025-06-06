@@ -19,16 +19,27 @@ class KBMController extends Controller
     {
         $taAktif = PeriodeModel::where('status', 'A')->first();
         
-        $kbm = KBMModel::where('id_ta', $taAktif->id)
-        ->with(['mapel', 'kelas', 'guru'])
-        ->orderBy('hari', 'asc')
-        ->get();
+        $kelas = KelasJurusanModel::with('kbm')
+            ->where('id_ta', $taAktif->id)
+            ->orderBy('nama_kelas', 'asc')
+            ->get();
 
-        $guru   = GuruModel::all();
-        $mapel  = MapelModel::all();
-        $kelas  = KelasJurusanModel::all();
+        return view('admin.kbm.kbm2', compact('taAktif','kelas'));
+    }
 
-        return view('admin.kbm.kbm', compact('kbm','taAktif','guru', 'mapel', 'kelas'));
+     public function detail($id)
+    {
+        $kelas = KelasJurusanModel::findOrFail($id);
+
+        $kbm = KBMModel::with(['mapel', 'guru', 'tahunAjaran', 'kelas'])
+            ->where('id_kls_jurusan', $id)
+            ->get()
+            ->groupBy('hari');
+
+        $guru = GuruModel::all();
+        $mapel = MapelModel::all();
+        
+        return view('admin.kbm.detail', compact('kelas', 'kbm', 'guru', 'mapel'));
     }
 
     public function store(Request $request)
