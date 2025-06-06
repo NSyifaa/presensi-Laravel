@@ -17,6 +17,14 @@ class SiswaModel extends Model
         "kelamin",
         "alamat",
         "kode_jurusan",
+        'provinsi_id',
+        'provinsi',
+        'kabupaten_id',
+        'kabupaten',
+        'kecamatan_id',
+        'kecamatan',
+        'desa_id',
+        'desa',
     ];
     public function jurusan()
     {

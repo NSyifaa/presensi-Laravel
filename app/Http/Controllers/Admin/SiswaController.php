@@ -36,6 +36,10 @@ class SiswaController extends Controller
             'kelamin' => 'required',
             'alamat' => 'required|required|string|max:255',
             'jurusan' => 'required|string|max:10',
+            'provinsi' => 'required|string|max:100',
+            'kabupaten' => 'required|string|max:100',
+            'kecamatan' => 'required|string|max:100',
+            'desa' => 'required|string|max:100',
         ]);
         
         // Check if the period already exists
@@ -54,6 +58,14 @@ class SiswaController extends Controller
             'kelamin' => $request->kelamin,
             'alamat' => $request->alamat,
             'kode_jurusan' => $request->jurusan,
+            'provinsi_id' => $request->provinsi_id,
+            'provinsi' => $request->provinsi,
+            'kabupaten_id' => $request->kabupaten_id,
+            'kabupaten' => $request->kabupaten,
+            'kecamatan_id' => $request->kecamatan_id,
+            'kecamatan' => $request->kecamatan,
+            'desa_id' => $request->desa_id,
+            'desa' => $request->desa,
         ]);
 
         User::create([
@@ -79,7 +91,12 @@ class SiswaController extends Controller
             'no_hp' => 'required|string|max:15',
             'kelamin' => 'required',
             'alamat' => 'required|required|string|max:255',
-            'jurusan' => 'required|string|max:10']);
+            'jurusan' => 'required|string|max:10',
+            'provinsi' => 'required|string|max:100',
+            'kabupaten' => 'required|string|max:100',
+            'kecamatan' => 'required|string|max:100',
+            'desa' => 'required|string|max:100',
+        ]);
 
         SiswaModel::where('nis', $id)->update([
             'nama' => $request->nama,
@@ -87,6 +104,14 @@ class SiswaController extends Controller
             'kelamin' => $request->kelamin,
             'alamat' => $request->alamat,
             'kode_jurusan' => $request->jurusan,
+            'provinsi_id' => $request->provinsi_id,
+            'provinsi' => $request->provinsi,
+            'kabupaten_id' => $request->kabupaten_id,
+            'kabupaten' => $request->kabupaten,
+            'kecamatan_id' => $request->kecamatan_id,
+            'kecamatan' => $request->kecamatan,
+            'desa_id' => $request->desa_id,
+            'desa' => $request->desa,
         ]);
 
         User::where('username', $id)->update([

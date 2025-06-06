@@ -39,7 +39,10 @@
                             {{ $item->no_hp }}
                         </td>
                         <td>
-                            {{ $item->alamat }}
+                            {{ $item->alamat }} , {{ $item->desa ? $item->desa : '' }}  
+                            {{ $item->kecamatan ? ', '.$item->kecamatan : '' }}  
+                            {{ $item->kabupaten ? ', '.$item->kabupaten : '' }}  
+                            {{ $item->provinsi ? ', '.$item->provinsi : '' }}
                         </td>
                         <td>
                           <center>
@@ -49,7 +52,12 @@
                             data-jurusan="{{ $item->jurusan->kode_jurusan }}"
                             data-kelamin="{{ $item->kelamin }}"
                             data-no_hp="{{ $item->no_hp }}"
-                            data-alamat="{{ $item->alamat }}">
+                            data-alamat="{{ $item->alamat }}"
+                            data-provinsi="{{ $item->provinsi_id }}"
+                            data-kabupaten="{{ $item->kabupaten_id }}"
+                            data-kecamatan="{{ $item->kecamatan_id }}"
+                            data-desa="{{ $item->desa_id }}"
+                            >
                                 <i class="nav-icon fas fa-edit"></i> Edit
                             </button>
                             <button type="button" class="btn btn-danger btn-xs btn-hapus" data-id="{{ $item->nis }}" id="btn-hapus">
@@ -118,6 +126,41 @@
                             <textarea class="form-control" name="alamat" id="alamat" cols="20" rows="3"></textarea>
                             <div class="invalid-feedback" id="error-alamat"></div>
                         </div>
+                        <div class="form-group">
+                            <label for="provinsi">Provinsi</label>
+                            <select name="provinsi_id" id="provinsi" class="form-control">
+                                <option value="" selected disabled>Pilih Provinsi</option>
+                            </select>
+                            <input type="hidden" name="provinsi">
+                            <div class="invalid-feedback" id="error-provinsi"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kabupaten">Kabupaten/Kota</label>
+                            <select name="kabupaten_id" id="kabupaten" class="form-control" disabled>
+                                <option value="" selected disabled>Pilih Kabupaten</option>
+                            </select>
+                            <input type="hidden" name="kabupaten">
+                            <div class="invalid-feedback" id="error-kabupaten"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kecamatan">Kecamatan</label>
+                            <select name="kecamatan_id" id="kecamatan" class="form-control" disabled>
+                                <option value="" selected disabled>Pilih Kecamatan</option>
+                            </select>
+                            <input type="hidden" name="kecamatan">
+                            <div class="invalid-feedback" id="error-kecamatan"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="desa">Desa/Kelurahan</label>
+                            <select name="desa_id" id="desa" class="form-control" disabled>
+                                <option value="" selected disabled>Pilih Desa</option>
+                            </select>
+                            <input type="hidden" name="desa">
+                            <div class="invalid-feedback" id="error-desa"></div>
+                        </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -180,10 +223,25 @@
     </div>
     <!-- /.modal -->
     
+@endsection
+
+@push('scripts')
     <script>
         $(document).ready(function() {
             $('#modal-default').on('show.bs.modal', function (event) {
-            $(this).removeAttr('aria-hidden');
+                $.getJSON("https://kanglerian.my.id/api-wilayah-indonesia/api/provinces.json", function (data) {
+                    $('#provinsi').empty().append('<option value="" disabled selected>Pilih Provinsi</option>');
+                    $.each(data, function (i, provinsi) {
+                        $('#provinsi').append($('<option>', {
+                            value: provinsi.id,
+                            text: provinsi.name
+                        }));
+                    });
+                });
+                
+                $('#kabupaten, #kecamatan, #desa').prop('disabled', true).html('<option selected disabled>Pilih</option>');
+
+                $(this).removeAttr('aria-hidden');
                 
                 var edit = false;
                 var button = $(event.relatedTarget); 
@@ -193,6 +251,10 @@
                 var kelamin = button.data('kelamin');
                 var no_hp = button.data('no_hp');
                 var alamat = button.data('alamat');
+                var provinsi_id = button.data('provinsi');
+                var kabupaten_id = button.data('kabupaten');
+                var kecamatan_id = button.data('kecamatan');
+                var desa_id = button.data('desa');
 
                 if (nis) {
                     $('#title').text('Edit Siswa');
@@ -203,6 +265,9 @@
                     $('#kelamin').val(kelamin);
                     $('#no_hp').val(no_hp);
                     $('#alamat').val(alamat);
+                    $('#provinsi_id').val(provinsi_id).trigger('change');
+                    $('#kabupaten_id').val(kabupaten_id).trigger('change');
+                    $('#kecamatan_id').val(kecamatan_id).trigger('change');
                     $('#form-tambah-data').data('edit', true);
                     $('#form-tambah-data').data('id', nis);
                 } else {
@@ -508,6 +573,79 @@
             });
         </script>
     @endif
+    <script>
+        // Saat Provinsi dipilih
+        $('#provinsi').on('change', function () {
+            const id = $(this).val();
+            const text = $(this).find("option:selected").text();
 
-    
-@endsection
+            // Set nama provinsi ke input hidden
+            $('input[name="provinsi"]').val(text);
+
+            $('#kabupaten').prop('disabled', false).html('<option selected disabled>Loading...</option>');
+            $.getJSON("https://kanglerian.my.id/api-wilayah-indonesia/api/regencies/" + id + ".json", function (data) {
+                $('#kabupaten').html('<option value="" disabled selected>Pilih Kabupaten</option>');
+                $.each(data, function (i, kab) {
+                    $('#kabupaten').append($('<option>', {
+                        value: kab.id,
+                        text: kab.name
+                    }));
+                });
+            });
+
+            // Reset berikutnya
+            $('#kecamatan, #desa').prop('disabled', true).html('<option selected disabled>Pilih</option>');
+            $('input[name="kabupaten"], input[name="kecamatan"], input[name="desa"]').val('');
+        });
+
+        // Saat Kabupaten dipilih
+        $('#kabupaten').on('change', function () {
+            const id = $(this).val();
+            const text = $(this).find("option:selected").text();
+
+            $('input[name="kabupaten"]').val(text);
+
+            $('#kecamatan').prop('disabled', false).html('<option selected disabled>Loading...</option>');
+            $.getJSON("https://kanglerian.my.id/api-wilayah-indonesia/api/districts/" + id + ".json", function (data) {
+                $('#kecamatan').html('<option value="" disabled selected>Pilih Kecamatan</option>');
+                $.each(data, function (i, kec) {
+                    $('#kecamatan').append($('<option>', {
+                        value: kec.id,
+                        text: kec.name
+                    }));
+                });
+            });
+
+            $('#desa').prop('disabled', true).html('<option selected disabled>Pilih</option>');
+            $('input[name="kecamatan"], input[name="desa"]').val('');
+        });
+
+        // Saat Kecamatan dipilih
+        $('#kecamatan').on('change', function () {
+            const id = $(this).val();
+            const text = $(this).find("option:selected").text();
+
+            $('input[name="kecamatan"]').val(text);
+
+            $('#desa').prop('disabled', false).html('<option selected disabled>Loading...</option>');
+            $.getJSON("https://kanglerian.my.id/api-wilayah-indonesia/api/villages/" + id + ".json", function (data) {
+            $('#desa').html('<option value="" disabled selected>Pilih Desa</option>');
+                $.each(data, function (i, desa) {
+                    $('#desa').append($('<option>', {
+                        value: desa.name,
+                        text: desa.name
+                    }));
+                });
+            });
+
+            $('input[name="desa"]').val('');
+        });
+
+        // Simpan nama desa ke input hidden saat dipilih
+        $('#desa').on('change', function () {
+            const text = $(this).find("option:selected").text();
+            $('input[name="desa"]').val(text);
+        });
+    </script>
+
+@endpush

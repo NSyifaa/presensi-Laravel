@@ -31,7 +31,11 @@ class GuruController extends Controller
             'nama' => 'required|string|max:255',
             'no_hp' => 'required|string|max:15',
             'kelamin' => 'required',
-            'alamat' => 'required|required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'provinsi' => 'required|string|max:100',
+            'kabupaten' => 'required|string|max:100',
+            'kecamatan' => 'required|string|max:100',
+            'desa' => 'required|string|max:100',
         ]);
         
         // Check if the period already exists
@@ -49,6 +53,14 @@ class GuruController extends Controller
             'no_hp' => $request->no_hp,
             'kelamin' => $request->kelamin,
             'alamat' => $request->alamat,
+            'provinsi_id' => $request->provinsi_id,
+            'provinsi' => $request->provinsi,
+            'kabupaten_id' => $request->kabupaten_id,
+            'kabupaten' => $request->kabupaten,
+            'kecamatan_id' => $request->kecamatan_id,
+            'kecamatan' => $request->kecamatan,
+            'desa_id' => $request->desa_id,
+            'desa' => $request->desa,
         ]);
 
         User::create([
@@ -73,7 +85,11 @@ class GuruController extends Controller
             'nama' => 'required|string|max:255',
             'no_hp' => 'required|string|max:15',
             'kelamin' => 'required',
-            'alamat' => 'required|required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'provinsi' => 'required|string|max:100',
+            'kabupaten' => 'required|string|max:100',
+            'kecamatan' => 'required|string|max:100',
+            'desa' => 'required|string|max:100',
         ]);
 
         GuruModel::where('nip', $id)->update([
@@ -81,6 +97,14 @@ class GuruController extends Controller
             'no_hp' => $request->no_hp,
             'kelamin' => $request->kelamin,
             'alamat' => $request->alamat,
+            'provinsi_id' => $request->provinsi_id,
+            'provinsi' => $request->provinsi,
+            'kabupaten_id' => $request->kabupaten_id,
+            'kabupaten' => $request->kabupaten,
+            'kecamatan_id' => $request->kecamatan_id,
+            'kecamatan' => $request->kecamatan,
+            'desa_id' => $request->desa_id,
+            'desa' => $request->desa,
         ]);
 
         User::where('username', $id)->update([

@@ -16,5 +16,13 @@ class GuruModel extends Model
         "no_hp",
         "kelamin",
         "alamat",
+        'provinsi_id',
+        'provinsi',
+        'kabupaten_id',
+        'kabupaten',
+        'kecamatan_id',
+        'kecamatan',
+        'desa_id',
+        'desa',
     ];
 }
