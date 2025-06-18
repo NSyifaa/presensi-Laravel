@@ -73,6 +73,7 @@ Route::group(['middleware' =>'auth:admin'],function () {
 
     Route::get('/kbm', [KBMController::class, 'index'])->name('a.kbm');
     Route::get('/kbm/detail/{id}', [KBMController::class, 'detail'])->name('a.kbm.detail');
+    Route::get('/kbm/detail/presensi/{id_kelas}/{id}', [KBMController::class, 'detail_presensi'])->name('a.kbm.detail.presensi');
     Route::post('/kbm/add', [KBMController::class, 'store'])->name('a.kbm.add');
     Route::post('/kbm/edit/{id}', [KBMController::class, 'update'])->name('a.kbm.edit');
     Route::delete('/kbm/delete/{id}', [KBMController::class, 'destroy'])->name('a.kbm.delete');
